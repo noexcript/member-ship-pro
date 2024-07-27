@@ -1,16 +1,17 @@
 <?php
-   /**
-    * account
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: account.tpl.php, v1.00 7/5/2023 9:54 AM Gewa Exp $
-    *
-    */
-   if (!defined("_WOJO")) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * account
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: account.tpl.php, v1.00 7/5/2023 9:54 AM Gewa Exp $
+ *
+ */
+if (!defined("_Devxjs")) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <form method="post" id="wojo_form" name="wojo_form">
    <div class="row gutters">
@@ -74,15 +75,12 @@
          <div class="wojo simple segment form">
             <div class="basic field">
                <label class="justify-center"><?php echo Language::$word->AVATAR; ?></label>
-               <input type="file" name="avatar" data-type="image"
-                      data-exist="<?php echo ($this->data->avatar)? UPLOADURL . '/avatars/' . $this->data->avatar : UPLOADURL . '/avatars/default.svg'; ?>"
-                      accept="image/png, image/jpeg">
+               <input type="file" name="avatar" data-type="image" data-exist="<?php echo ($this->data->avatar) ? UPLOADURL . '/avatars/' . $this->data->avatar : UPLOADURL . '/avatars/default.svg'; ?>" accept="image/png, image/jpeg">
             </div>
          </div>
       </div>
    </div>
    <div class="center-align">
-      <button type="button" data-action="updateAccount" name="dosubmit"
-              class="wojo primary button"><?php echo Language::$word->M_UPDATE; ?></button>
+      <button type="button" data-action="updateAccount" name="dosubmit" class="wojo primary button"><?php echo Language::$word->M_UPDATE; ?></button>
    </div>
 </form>

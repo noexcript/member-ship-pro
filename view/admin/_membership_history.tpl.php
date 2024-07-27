@@ -1,31 +1,31 @@
 <?php
-   /**
-    * _membership_history
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: _membership_history.tpl.php, v1.00 7/5/2023 7:36 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * _membership_history
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: _membership_history.tpl.php, v1.00 7/5/2023 7:36 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
-<?php if (!$this->plist): ?>
+<?php if (!$this->plist) : ?>
    <div class="center-align">
       <img src="<?php echo ADMINVIEW; ?>/images/empty.svg" alt="" class="wojo big inline image">
       <div class="margin-small-top">
          <p class="wojo small icon alert inverted attached compact message">
-            <i
-              class="icon exclamation triangle"></i><?php echo Language::$word->SYSTEM_ERR3; ?></p>
+            <i class="icon exclamation triangle"></i><?php echo Language::$word->SYSTEM_ERR3; ?>
+         </p>
       </div>
    </div>
-<?php else: ?>
+<?php else : ?>
    <div class="row justify-end">
       <div class="columns auto mobile-100 phone-100">
-         <a href="<?php echo ADMINVIEW . '/helper.php?action=exportMembershipPayments&amp;id=' . $this->data->id;?>"
-            class="wojo small secondary fluid button">
+         <a href="<?php echo ADMINVIEW . '/helper.php?action=exportMembershipPayments&amp;id=' . $this->data->id; ?>" class="wojo small secondary fluid button">
             <i class="icon wysiwyg table"></i><?php echo Language::$word->EXPORT; ?>
          </a>
       </div>
@@ -40,16 +40,16 @@
    </div>
    <table class="wojo basic responsive table">
       <thead>
-      <tr>
-         <th><?php echo Language::$word->USER; ?></th>
-         <th><?php echo Language::$word->TRX_AMOUNT; ?></th>
-         <th><?php echo Language::$word->TRX_TAX; ?></th>
-         <th><?php echo Language::$word->TRX_COUPON; ?></th>
-         <th><?php echo Language::$word->TRX_TOTAMT; ?></th>
-         <th><?php echo Language::$word->CREATED; ?></th>
-      </tr>
+         <tr>
+            <th><?php echo Language::$word->USER; ?></th>
+            <th><?php echo Language::$word->TRX_AMOUNT; ?></th>
+            <th><?php echo Language::$word->TRX_TAX; ?></th>
+            <th><?php echo Language::$word->TRX_COUPON; ?></th>
+            <th><?php echo Language::$word->TRX_TOTAMT; ?></th>
+            <th><?php echo Language::$word->CREATED; ?></th>
+         </tr>
       </thead>
-      <?php foreach ($this->plist as $row): ?>
+      <?php foreach ($this->plist as $row) : ?>
          <tr>
             <td>
                <a href="<?php echo Url::url('admin/users/edit', $row->user_id); ?>"><?php echo $row->name; ?></a>
@@ -58,8 +58,7 @@
             <td><?php echo $row->tax; ?></td>
             <td><?php echo $row->coupon; ?></td>
             <td><?php echo $row->total; ?></td>
-            <td data-sort-value="<?php echo strtotime($row->created); ?>"
-                class="auto"><?php echo Date::doDate('short_date', $row->created); ?></td>
+            <td data-sort-value="<?php echo strtotime($row->created); ?>" class="auto"><?php echo Date::doDate('short_date', $row->created); ?></td>
          </tr>
       <?php endforeach; ?>
    </table>
@@ -79,19 +78,19 @@
    <script src="<?php echo SITEURL . '/assets/raphael.min.js'; ?>"></script>
    <script type="text/javascript">
       // <![CDATA[
-      $(document).ready(function () {
+      $(document).ready(function() {
          $("#payment_chart").parent().addClass('loading');
          $.ajax({
             type: 'GET',
-            url: "<?php echo ADMINVIEW . '/helper.php';?>",
+            url: "<?php echo ADMINVIEW . '/helper.php'; ?>",
             data: {
                id: $.url().segment(-1),
                action: "getMembershipPaymentsChart"
             },
             dataType: 'json'
-         }).done(function (json) {
+         }).done(function(json) {
             let legend = '';
-            json.legend.map(function (val) {
+            json.legend.map(function(val) {
                legend += val;
             });
             $("#legend").html(legend);

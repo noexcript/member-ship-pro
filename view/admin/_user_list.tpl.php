@@ -1,16 +1,17 @@
 <?php
-   /**
-    * _users_list
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: _users_list.tpl.php, v1.00 7/6/2023 4:11 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * _users_list
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: _users_list.tpl.php, v1.00 7/6/2023 4:11 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <div class="row gutters align-middle">
    <div class="columns screen-40 tablet-40 mobile-100">
@@ -50,16 +51,13 @@
       <a href="<?php echo Url::url(Router::$path); ?>" class="item<?php echo Url::setActive('order', false); ?>">
          <?php echo Language::$word->RESET; ?>
       </a>
-      <a href="<?php echo Url::url(Router::$path, '?order=membership_id|DESC'); ?>"
-         class="item<?php echo Url::setActive('order', 'membership_id'); ?>">
+      <a href="<?php echo Url::url(Router::$path, '?order=membership_id|DESC'); ?>" class="item<?php echo Url::setActive('order', 'membership_id'); ?>">
          <?php echo Language::$word->MEMBERSHIP; ?>
       </a>
-      <a href="<?php echo Url::url(Router::$path, '?order=email|DESC'); ?>"
-         class="item<?php echo Url::setActive('order', 'email'); ?>">
+      <a href="<?php echo Url::url(Router::$path, '?order=email|DESC'); ?>" class="item<?php echo Url::setActive('order', 'email'); ?>">
          <?php echo Language::$word->M_EMAIL1; ?>
       </a>
-      <a href="<?php echo Url::url(Router::$path, '?order=fname|DESC'); ?>"
-         class="item<?php echo Url::setActive('order', 'fname'); ?>">
+      <a href="<?php echo Url::url(Router::$path, '?order=fname|DESC'); ?>" class="item<?php echo Url::setActive('order', 'fname'); ?>">
          <?php echo Language::$word->NAME; ?>
       </a>
       <a href="<?php echo Url::sortItems(Url::url(Router::$path), 'order'); ?>" class="item">
@@ -70,30 +68,30 @@
 <div class="center-align margin-vertical">
    <?php echo Validator::alphaBits(Url::url(Router::$path)); ?>
 </div>
-<?php if (!$this->data): ?>
+<?php if (!$this->data) : ?>
    <div class="center-align">
       <img src="<?php echo ADMINVIEW; ?>/images/notfound.svg" alt="" class="wojo big inline image">
       <div class="margin-small-top">
          <p class="wojo small icon alert inverted attached compact message">
-            <i class="icon exclamation triangle"></i><?php echo Language::$word->M_INFO6; ?></p>
+            <i class="icon exclamation triangle"></i><?php echo Language::$word->M_INFO6; ?>
+         </p>
       </div>
    </div>
-<?php else: ?>
+<?php else : ?>
    <div class="row grid screen-2 tablet-1 mobile-1 phone-1 gutters">
-      <?php foreach ($this->data as $row): ?>
+      <?php foreach ($this->data as $row) : ?>
          <div class="columns" id="item_<?php echo $row->id; ?>">
             <div class="wojo attached card">
                <div class="divided header">
                   <div class="row horizontal-gutters align-middle">
                      <div class="columns auto">
-                        <img src="<?php echo UPLOADURL; ?>/avatars/<?php echo $row->avatar ?? 'default.svg'; ?>"
-                             alt="" class="wojo small circular image">
+                        <img src="<?php echo UPLOADURL; ?>/avatars/<?php echo $row->avatar ?? 'default.svg'; ?>" alt="" class="wojo small circular image">
                      </div>
                      <div class="columns">
                         <h5>
-                           <?php if (Auth::hasPrivileges('edit_user')): ?>
+                           <?php if (Auth::hasPrivileges('edit_user')) : ?>
                               <a href="<?php echo Url::url(Router::$path, 'edit/' . $row->id); ?>"><?php echo $row->fullname; ?></a>
-                           <?php else: ?>
+                           <?php else : ?>
                               <?php echo $row->fullname; ?>
                            <?php endif; ?>
                         </h5>
@@ -101,22 +99,20 @@
                         <?php echo Utility::userType($row->type); ?>
                      </div>
                      <div class="columns auto">
-                        <a class="wojo icon circular primary inverted button"
-                           data-wdropdown="#userDrop_<?php echo $row->id; ?>">
+                        <a class="wojo icon circular primary inverted button" data-wdropdown="#userDrop_<?php echo $row->id; ?>">
                            <i class="icon three dots"></i>
                         </a>
                         <div class="wojo dropdown small pointing top-right" id="userDrop_<?php echo $row->id; ?>">
-                           <?php if (Auth::hasPrivileges('edit_user')): ?>
+                           <?php if (Auth::hasPrivileges('edit_user')) : ?>
                               <a class="item" href="<?php echo Url::url(Router::$path, 'edit/' . $row->id); ?>">
                                  <i class="icon pencil"></i><?php echo Language::$word->EDIT; ?>
                               </a>
                            <?php endif; ?>
                            <a class="item" href="<?php echo Url::url(Router::$path, 'history/' . $row->id); ?>">
                               <i class="icon time history"></i><?php echo Language::$word->HISTORY; ?></a>
-                           <?php if (Auth::hasPrivileges('delete_user')): ?>
+                           <?php if (Auth::hasPrivileges('delete_user')) : ?>
                               <div class="wojo basic divider"></div>
-                              <a data-set='{"option":[{"action":"trashUser","title": "<?php echo Validator::sanitize($row->fullname, 'chars'); ?>","id": "<?php echo $row->id; ?>"}],"action":"trash","parent":"#item_<?php echo $row->id; ?>"}'
-                                 class="item text-weight-500 data">
+                              <a data-set='{"option":[{"action":"trashUser","title": "<?php echo Validator::sanitize($row->fullname, 'chars'); ?>","id": "<?php echo $row->id; ?>"}],"action":"trash","parent":"#item_<?php echo $row->id; ?>"}' class="item text-weight-500 data">
                                  <i class="icon negative trash"></i>
                                  <?php echo Language::$word->TRASH; ?>
                               </a>
@@ -141,11 +137,11 @@
                   <div class="wojo small divided horizontal block list justify-center">
                      <div class="item">
                         <?php echo Language::$word->MEMBERSHIP; ?>:
-                        <span class="description"><?php echo ($row->membership_id)? '<a href="' . Url::url('/admin/memberships/edit/' . $row->membership_id) . '">' . $row->mtitle . '</a>' : '-/-'; ?></span>
+                        <span class="description"><?php echo ($row->membership_id) ? '<a href="' . Url::url('/admin/memberships/edit/' . $row->membership_id) . '">' . $row->mtitle . '</a>' : '-/-'; ?></span>
                      </div>
                      <div class="item">
                         <?php echo Language::$word->MEM_EXP; ?>:
-                        <span class="description"><?php echo ($row->mem_expire)? Date::doDate('short_date', $row->mem_expire) : '-/-'; ?></span>
+                        <span class="description"><?php echo ($row->mem_expire) ? Date::doDate('short_date', $row->mem_expire) : '-/-'; ?></span>
                      </div>
                   </div>
                </div>

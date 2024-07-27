@@ -1,16 +1,17 @@
 <?php
-   /**
-    * _contact
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: _contact.tpl.php, v1.00 7/16/2023 2:12 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * _contact
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: _contact.tpl.php, v1.00 7/16/2023 2:12 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <div class="row justify-center">
    <div class="columns screen-50 tablet-60 mobile-100 phone-100">
@@ -22,13 +23,13 @@
                      <label><?php echo Language::$word->CNT_NAME; ?>
                         <i class="icon asterisk"></i>
                      </label>
-                     <input type="text" placeholder="<?php echo Language::$word->CNT_NAME; ?>" value="<?php echo (App::Auth()->logged_in)? App::Auth()->name : null; ?>" name="name">
+                     <input type="text" placeholder="<?php echo Language::$word->CNT_NAME; ?>" value="<?php echo (App::Auth()->logged_in) ? App::Auth()->name : null; ?>" name="name">
                   </div>
                   <div class="field">
                      <label><?php echo Language::$word->M_EMAIL; ?>
                         <i class="icon asterisk"></i>
                      </label>
-                     <input type="text" placeholder="<?php echo Language::$word->M_EMAIL; ?>" value="<?php echo (App::Auth()->logged_in)? App::Auth()->email : null; ?>" name="email">
+                     <input type="text" placeholder="<?php echo Language::$word->M_EMAIL; ?>" value="<?php echo (App::Auth()->logged_in) ? App::Auth()->email : null; ?>" name="email">
                   </div>
                   <div class="field">
                      <label><?php echo Language::$word->M_PHONE; ?></label>

@@ -1,20 +1,21 @@
 <?php
-   /**
-    * file
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: file.tpl.php, v1.00 7/7/2023 11:49 AM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
 
-   if (!Auth::hasPrivileges('manage_files')): print Message::msgError(Language::$word->NOACCESS);
-      return;
-   endif;
+/**
+ * file
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: file.tpl.php, v1.00 7/7/2023 11:49 AM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
+
+if (!Auth::hasPrivileges('manage_files')) : print Message::msgError(Language::$word->NOACCESS);
+   return;
+endif;
 ?>
 <div class="row gutters justify-end">
    <div class="columns auto mobile-100 phone-100">
@@ -84,8 +85,8 @@
    </div>
 </div>
 <div class="row grid gutters screen-3 tablet-3 mobile-2 phone-1" id="fileData">
-   <?php if ($this->data): ?>
-      <?php foreach ($this->data as $row): ?>
+   <?php if ($this->data) : ?>
+      <?php foreach ($this->data as $row) : ?>
          <div class="columns" id="item_<?php echo $row->id; ?>">
             <div class="wojo attached card">
                <div class="header divided">
@@ -114,7 +115,7 @@
                         </a>
                      </div>
                      <div class="columns auto">
-                        <span data-tooltip="<?php echo($row->fileaccess > 0? Language::$word->ASSIGNED : Language::$word->UNASSIGNED); ?>"><?php echo($row->fileaccess > 0? '<i class="icon positive check"></i>' : '<i class="icon negative minus"></i>'); ?></span>
+                        <span data-tooltip="<?php echo ($row->fileaccess > 0 ? Language::$word->ASSIGNED : Language::$word->UNASSIGNED); ?>"><?php echo ($row->fileaccess > 0 ? '<i class="icon positive check"></i>' : '<i class="icon negative minus"></i>'); ?></span>
                      </div>
                   </div>
                </div>
@@ -135,12 +136,12 @@
 <script src="<?php echo ADMINVIEW; ?>/js/files.js"></script>
 <script type="text/javascript">
    // <![CDATA[
-   $(document).ready(function () {
+   $(document).ready(function() {
       $('#fileData').Manager({
-         url: "<?php echo ADMINVIEW;?>",
-         surl: "<?php echo SITEURL;?>",
+         url: "<?php echo ADMINVIEW; ?>",
+         surl: "<?php echo SITEURL; ?>",
          lang: {
-            removeText: "<?php echo Language::$word->REMOVE;?>"
+            removeText: "<?php echo Language::$word->REMOVE; ?>"
          }
       });
    });

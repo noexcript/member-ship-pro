@@ -10,10 +10,12 @@
  *
  */
 
-const _WOJO = true;
+const _Devxjs = true;
 
 include('init.php');
 $core = App::Core();
+$router = new Router();
+$tpl = App::View(BASEPATH . 'view/');
 
-include('./routes/web.php');
 include('./routes/api.php');
+include('./routes/web.php');

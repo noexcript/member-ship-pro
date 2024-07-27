@@ -13,7 +13,7 @@ if (!defined('_Devxjs')) {
     die('Direct access to this location is not allowed.');
 }
 
-class Front
+class Api
 {
 
     /**
@@ -21,19 +21,33 @@ class Front
      *
      * @return void
      */
+
+    private function sendJson($data = null, $message = null, $httpCode = 200)
+
+    {
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+        header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+        // Responder às requisições OPTIONS antes de prosseguir
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+            header('HTTP/1.1 200 OK');
+            exit;
+        }
+        header('Content-Type: application/json');
+        http_response_code($httpCode);
+        $response = [
+
+            'object' => $data,
+            'message' => $message
+        ];
+        echo json_encode($response);
+        exit;
+    }
     public function index(): void
     {
-        $tpl = App::View(BASEPATH . 'view/');
-        $tpl->dir = 'front/';
-        $tpl->title = str_replace('[COMPANY]', App::Core()->company, Language::$word->META_T28);
-        $tpl->row = Database::Go()->select(Content::pTable)->where('page_type', 'home', '=')->first()->run();
-        $tpl->memberships = Database::Go()->select(Membership::mTable)->where('private', 1, '<')->orderBy('sorting', 'ASC')->run();
-        if ($tpl->row) {
-            $tpl->keywords = $tpl->row->keywords;
-            $tpl->description = $tpl->row->description;
-        }
-
-        $tpl->template = 'front/index';
+       
+        $this->sendJson(null,'Hello World');
     }
 
     /**
@@ -79,17 +93,11 @@ class Front
      */
     public function login(): void
     {
-        if (App::Auth()->is_User()) {
-            Url::redirect(Url::url('/dashboard'));
-            exit;
-        }
-
-        $tpl = App::View(BASEPATH . 'view/');
-        $tpl->dir = 'front/full/';
-        $tpl->title = str_replace('[COMPANY]', App::Core()->company, Language::$word->META_T28);
-
-        $tpl->template = 'front/login';
-    }
+       
+        App::Auth()->login($_POST['username'], $_POST['password']);
+        
+        exit;
+    }   
 
     /**
      * register

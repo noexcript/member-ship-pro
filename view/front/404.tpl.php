@@ -1,16 +1,17 @@
 <?php
-   /**
-    * 404.tpl.php
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: 404.tpl.php, v1.00 7/3/2023 12:30 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * 404.tpl.php
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: 404.tpl.php, v1.00 7/3/2023 12:30 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <main>
    <div class="wojo-grid">

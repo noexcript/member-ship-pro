@@ -1,25 +1,26 @@
 <?php
-   /**
-    * index
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: index.tpl.php, v1.00 7/15/2023 8:26 AM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * index
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: index.tpl.php, v1.00 7/15/2023 8:26 AM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <main class="overflow-hidden">
    <div class="padding-big-vertical">
       <div class="wojo-grid">
          <?php echo Url::out_url($this->row->body); ?>
-         <?php if ($this->memberships): ?>
+         <?php if ($this->memberships) : ?>
             <div class="wojo simple compact segment">
                <div class="wojo cards screen-2 tablet-2 mobile-1 phone-1">
-                  <?php foreach ($this->memberships as $row): ?>
+                  <?php foreach ($this->memberships as $row) : ?>
                      <div class="card">
                         <div class="content">
                            <h6><?php echo $row->title; ?></h6>
@@ -36,13 +37,13 @@
                               <?php echo $row->body; ?>
                            </div>
                            <div class="right-align">
-                              <a class="wojo primary button" href="<?php echo ($this->auth->is_User())? Url::url('/dashboard') : Url::url('/login'); ?>"><?php echo ($this->auth->is_User())? Language::$word->MEM_START : Language::$word->LOGIN_R7; ?></a>
+                              <a class="wojo primary button" href="<?php echo ($this->auth->is_User()) ? Url::url('/dashboard') : Url::url('/login'); ?>"><?php echo ($this->auth->is_User()) ? Language::$word->MEM_START : Language::$word->LOGIN_R7; ?></a>
                            </div>
                         </div>
                         <figure class="absolute position-top position-right margin-small-top margin-mini-right">
-                           <?php if ($row->thumb): ?>
+                           <?php if ($row->thumb) : ?>
                               <img src="<?php echo UPLOADURL; ?>/memberships/<?php echo $row->thumb; ?>" alt="" class="wojo small image">
-                           <?php else: ?>
+                           <?php else : ?>
                               <img src="<?php echo UPLOADURL; ?>/memberships/default.svg" alt="" class="wojo small image">
                            <?php endif; ?>
                         </figure>

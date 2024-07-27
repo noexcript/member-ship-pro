@@ -1,7 +1,6 @@
 <?php
 
-$router = new Router();
-$tpl = App::View(BASEPATH . 'view/');
+
 
 //admin routes
 $router->mount('/admin', function () use ($router, $tpl) {

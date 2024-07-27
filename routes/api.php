@@ -1,23 +1,25 @@
 <?php
 
-$router = new Router();
-$tpl = App::View(BASEPATH . 'view/');
+
 
 //admin routes
-$router->mount('/ap/v1', function () use ($router, $tpl) {
+$router->mount('/api/v1', function () use ($router, $tpl) {
     //admin login
-    $router->match('GET|POST', '/login', function () use ($tpl) {
-        if (App::Auth()->is_Admin()) {
-            Url::redirect(SITEURL . '/admin/');
-            exit;
-        }
+    // $router->match('GET|POST', '/login', function () use ($tpl) {
+    //     if (App::Auth()->is_Admin()) {
+    //         Url::redirect(SITEURL . '/admin/');
+    //         exit;
+    //     }
 
-        $tpl->template = 'admin/login';
-        $tpl->title = Language::$word->LOGIN;
-    });
+    //     $tpl->template = 'admin/login';
+    //     $tpl->title = Language::$word->LOGIN;
+    // });
 
     //admin index
-    $router->get('/', 'Admin@index');
+    $router->get('/', 'Api@index');
+
+    $router->match('GET|POST', '/login', 'Api@login');
+  
 
     //admin users
     $router->mount('/users', function () use ($router, $tpl) {
@@ -133,7 +135,7 @@ $router->mount('/ap/v1', function () use ($router, $tpl) {
 
 //front end routes
 $router->match('GET|POST', '/', 'Front@index');
-$router->match('GET|POST', '/login', 'Front@login');
+
 
 if ($core->reg_allowed) {
     $router->match('GET|POST', '/register', 'Front@register');
@@ -154,35 +156,3 @@ $router->mount('/dashboard', function () use ($router, $tpl) {
     $router->get('/downloads', 'Front@downloads');
 });
 
-//Custom Routes add here
-$router->get('/logout', function () {
-    App::Auth()->logout();
-    Url::redirect(SITEURL . '/');
-});
-
-//404
-$router->set404(function () use ($core, $router) {
-    $tpl = App::View(BASEPATH . 'view/');
-    $tpl->dir = $router->segments[0] == 'admin' ? 'admin/' : 'front/';
-    $tpl->core = $core;
-    $tpl->auth = App::Auth();
-    $tpl->db = App::Database();
-    $tpl->segments = $router->segments;
-    $tpl->template = $router->segments[0] == 'admin' ? 'admin/404' : 'front/404';
-    $tpl->title = Language::$word->META_ERROR;
-    $tpl->keywords = null;
-    $tpl->description = null;
-    $tpl->pages = Database::Go()->select(Content::pTable, array('title', 'slug', 'is_hide', 'membership_id', 'page_type'))->where('active', 1, '=')->orderBy('sorting', 'ASC')->run();
-    echo $tpl->render();
-});
-
-// Run router
-$router->run(function () use ($tpl, $core, $router) {
-    $tpl->segments = $router->segments;
-    $tpl->core = $core;
-    $tpl->auth = App::Auth();
-    if (!str_starts_with($router->segments[0], 'admin')) {
-        $tpl->pages = Database::Go()->select(Content::pTable, array('title', 'slug', 'is_hide', 'membership_id', 'page_type'))->where('active', 1, '=')->orderBy('sorting', 'ASC')->run();
-    }
-    echo $tpl->render();
-});

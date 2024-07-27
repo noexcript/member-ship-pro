@@ -9,7 +9,7 @@
  * @version 5.00: Router.php, v1.00 7/1/2023 7:00 PM Gewa Exp $
  *
  */
-if (!defined('_WOJO')) {
+if (!defined('_Devxjs')) {
     die('Direct access to this location is not allowed.');
 }
 

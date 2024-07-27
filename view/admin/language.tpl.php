@@ -1,20 +1,21 @@
 <?php
-   /**
-    * language
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.20: language.tpl.php, v1.00 7/4/2023 5:17 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
 
-   if (!Auth::hasPrivileges('manage_languages')): print Message::msgError(Language::$word->NOACCESS);
-      return;
-   endif;
+/**
+ * language
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.20: language.tpl.php, v1.00 7/4/2023 5:17 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
+
+if (!Auth::hasPrivileges('manage_languages')) : print Message::msgError(Language::$word->NOACCESS);
+   return;
+endif;
 ?>
 <div class="wojo form">
    <div class="row gutters align-middle justify-center">
@@ -27,7 +28,7 @@
       <div class="columns screen-30 mobile-100 phone-100">
          <select name="pgroup" id="pgroup" data-abbr="<?php echo Core::$language; ?>">
             <option data-type="all" value="all"><?php echo Language::$word->LG_SUB4; ?></option>
-            <?php foreach ($this->sections as $rows): ?>
+            <?php foreach ($this->sections as $rows) : ?>
                <option data-type="filter" value="<?php echo $rows; ?>"><?php echo $rows; ?></option>
             <?php endforeach; ?>
             <?php unset($rows); ?>
@@ -38,10 +39,10 @@
 <?php $i = 0; ?>
 <table class="wojo responsive table" id="editable">
    <thead>
-   <tr>
-      <th><?php echo Language::$word->NAME; ?></th>
-      <th class="auto right-align"><?php echo Language::$word->LG_KEY; ?></th>
-   </tr>
+      <tr>
+         <th><?php echo Language::$word->NAME; ?></th>
+         <th class="auto right-align"><?php echo Language::$word->LG_KEY; ?></th>
+      </tr>
    </thead>
    <?php foreach ($this->data as $key => $row) : ?>
       <?php $i++; ?>
@@ -55,12 +56,12 @@
       </tr>
    <?php endforeach; ?>
 </table>
-<script src="<?php echo ADMINVIEW;?>/js/language.js"></script>
+<script src="<?php echo ADMINVIEW; ?>/js/language.js"></script>
 <script type="text/javascript">
    // <![CDATA[
    $(document).ready(function() {
       $.Language({
-         url: "<?php echo ADMINVIEW;?>",
+         url: "<?php echo ADMINVIEW; ?>",
       });
    });
    // ]]>
