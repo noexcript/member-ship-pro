@@ -256,16 +256,18 @@ class Front
                 }
             }
         }
+
         Content::verifyCustomFields();
         if (count(Message::$msgs) === 0) {
             $hash = Auth::doHash($safe->password);
             // if ($core->reg_verify == 1) {
             //     $active = 't';
-            if ($core->auto_verify == 0) :
-                $active = 'n';
-            else :
-                $active = 'y';
-            endif;
+            // if ($core->auto_verify == 0) :
+            //     $active = 'n';
+            // else :
+            //     $active = 'y';
+            // endif;
+            $active = 'y';
             $data = array(
                 'email' => $safe->email,
                 'username' => $safe->username,
@@ -347,159 +349,161 @@ class Front
                 Database::Go()->update(User::mTable, $xdata)->where('id', $last_id, '=')->run();
             }
 
-            $mailer = Mailer::sendMail();
+            // $mailer = Mailer::sendMail();
 
-            if ($core->reg_verify == 1) {
-                $message = Language::$word->M_INFO7;
-                $json['redirect'] = SITEURL;
-                $tpl = Database::Go()->select(Content::eTable, array('body', 'subject'))->where('typeid', 'regMail', '=')->first()->run();
+            // if ($core->reg_verify == 1) {
+            //     $message = Language::$word->M_INFO7;
+            //     $json['redirect'] = SITEURL;
+            //     $tpl = Database::Go()->select(Content::eTable, array('body', 'subject'))->where('typeid', 'regMail', '=')->first()->run();
 
-                $body = str_replace(array(
-                    '[LOGO]',
-                    '[DATE]',
-                    '[COMPANY]',
-                    '[SITE_NAME]',
-                    '[NAME]',
-                    '[USERNAME]',
-                    '[PASSWORD]',
-                    '[LINK]',
-                    '[FB]',
-                    '[TW]',
-                    '[CEMAIL]',
-                    '[SITEURL]'
-                ), array(
-                    $core->plogo,
-                    date('Y'),
-                    $core->company,
-                    $core->company,
-                    $safe->fname . ' ' . $safe->lname,
-                    $safe->email,
-                    $safe->password,
-                    Url::url('/activation', '?token=' . $data['token'] . '&email=' . $data['email']),
-                    $core->social->facebook,
-                    $core->social->twitter,
-                    $core->site_email,
-                    SITEURL
-                ), $tpl->body);
-            } elseif ($core->auto_verify == 0) {
-                $message = Language::$word->M_INFO7;
-                $json['redirect'] = SITEURL;
+            //     $body = str_replace(array(
+            //         '[LOGO]',
+            //         '[DATE]',
+            //         '[COMPANY]',
+            //         '[SITE_NAME]',
+            //         '[NAME]',
+            //         '[USERNAME]',
+            //         '[PASSWORD]',
+            //         '[LINK]',
+            //         '[FB]',
+            //         '[TW]',
+            //         '[CEMAIL]',
+            //         '[SITEURL]'
+            //     ), array(
+            //         $core->plogo,
+            //         date('Y'),
+            //         $core->company,
+            //         $core->company,
+            //         $safe->fname . ' ' . $safe->lname,
+            //         $safe->email,
+            //         $safe->password,
+            //         Url::url('/activation', '?token=' . $data['token'] . '&email=' . $data['email']),
+            //         $core->social->facebook,
+            //         $core->social->twitter,
+            //         $core->site_email,
+            //         SITEURL
+            //     ), $tpl->body);
+            // } elseif ($core->auto_verify == 0) {
+            //     $message = Language::$word->M_INFO7;
+            //     $json['redirect'] = SITEURL;
 
-                $tpl = Database::Go()->select(Content::eTable, array('body', 'subject'))->where('typeid', 'regMailPending', '=')->first()->run();
+            //     $tpl = Database::Go()->select(Content::eTable, array('body', 'subject'))->where('typeid', 'regMailPending', '=')->first()->run();
 
-                $body = str_replace(array(
-                    '[LOGO]',
-                    '[DATE]',
-                    '[COMPANY]',
-                    '[SITE_NAME]',
-                    '[NAME]',
-                    '[USERNAME]',
-                    '[PASSWORD]',
-                    '[FB]',
-                    '[TW]',
-                    '[CEMAIL]',
-                    '[SITEURL]'
-                ), array(
-                    $core->plogo,
-                    date('Y'),
-                    $core->company,
-                    $core->company,
-                    $safe->fname . ' ' . $safe->lname,
-                    $safe->email,
-                    $safe->password,
-                    $core->social->facebook,
-                    $core->social->twitter,
-                    $core->site_email,
-                    SITEURL
-                ), $tpl->body);
-            } else {
-                //login user
-                App::Auth()->login($safe->email, $safe->password, true);
-                $message = Language::$word->M_INFO8;
-                $json['redirect'] = Url::url('/dashboard');
+            //     $body = str_replace(array(
+            //         '[LOGO]',
+            //         '[DATE]',
+            //         '[COMPANY]',
+            //         '[SITE_NAME]',
+            //         '[NAME]',
+            //         '[USERNAME]',
+            //         '[PASSWORD]',
+            //         '[FB]',
+            //         '[TW]',
+            //         '[CEMAIL]',
+            //         '[SITEURL]'
+            //     ), array(
+            //         $core->plogo,
+            //         date('Y'),
+            //         $core->company,
+            //         $core->company,
+            //         $safe->fname . ' ' . $safe->lname,
+            //         $safe->email,
+            //         $safe->password,
+            //         $core->social->facebook,
+            //         $core->social->twitter,
+            //         $core->site_email,
+            //         SITEURL
+            //     ), $tpl->body);
+            // } else {
+            //     //login user
+            //     App::Auth()->login($safe->email, $safe->password, true);
+            //     $message = Language::$word->M_INFO8;
+            //     $json['redirect'] = Url::url('/dashboard');
 
-                $tpl = Database::Go()->select(Content::eTable, array('body', 'subject'))->where('typeid', 'welcomeEmail', '=')->first()->run();
+            //     $tpl = Database::Go()->select(Content::eTable, array('body', 'subject'))->where('typeid', 'welcomeEmail', '=')->first()->run();
 
-                $body = str_replace(array(
-                    '[LOGO]',
-                    '[DATE]',
-                    '[COMPANY]',
-                    '[SITE_NAME]',
-                    '[NAME]',
-                    '[USERNAME]',
-                    '[PASSWORD]',
-                    '[LINK]',
-                    '[FB]',
-                    '[TW]',
-                    '[CEMAIL]',
-                    '[SITEURL]'
-                ), array(
-                    $core->plogo,
-                    date('Y'),
-                    $core->company,
-                    $core->company,
-                    $safe->fname . ' ' . $safe->lname,
-                    $safe->email,
-                    $safe->password,
-                    Url::url(''),
-                    $core->social->facebook,
-                    $core->social->twitter,
-                    $core->site_email,
-                    SITEURL
-                ), $tpl->body);
-            }
-            $mailer->Subject = $tpl->subject;
-            $mailer->Body = $body;
-            $mailer->setFrom($core->site_email, $core->company);
-            $mailer->addAddress($data['email'], $data['fname'] . ' ' . $data['lname']);
-            $mailer->isHTML();
-            $mailer->send();
+            //     $body = str_replace(array(
+            //         '[LOGO]',
+            //         '[DATE]',
+            //         '[COMPANY]',
+            //         '[SITE_NAME]',
+            //         '[NAME]',
+            //         '[USERNAME]',
+            //         '[PASSWORD]',
+            //         '[LINK]',
+            //         '[FB]',
+            //         '[TW]',
+            //         '[CEMAIL]',
+            //         '[SITEURL]'
+            //     ), array(
+            //         $core->plogo,
+            //         date('Y'),
+            //         $core->company,
+            //         $core->company,
+            //         $safe->fname . ' ' . $safe->lname,
+            //         $safe->email,
+            //         $safe->password,
+            //         Url::url(''),
+            //         $core->social->facebook,
+            //         $core->social->twitter,
+            //         $core->site_email,
+            //         SITEURL
+            //     ), $tpl->body);
+            // }
+            // $mailer->Subject = $tpl->subject;
+            // $mailer->Body = $body;
+            // $mailer->setFrom($core->site_email, $core->company);
+            // $mailer->addAddress($data['email'], $data['fname'] . ' ' . $data['lname']);
+            // $mailer->isHTML();
+            // $mailer->send();
 
-            if ($core->notify_admin) {
-                $mailer2 = Mailer::sendMail();
-                $tpl2 = Database::Go()->select(Content::eTable, array('body', 'subject'))->where('typeid', 'notifyAdmin', '=')->first()->run();
+            // if ($core->notify_admin) {
+            //     $mailer2 = Mailer::sendMail();
+            //     $tpl2 = Database::Go()->select(Content::eTable, array('body', 'subject'))->where('typeid', 'notifyAdmin', '=')->first()->run();
 
-                $body2 = str_replace(array(
-                    '[LOGO]',
-                    '[DATE]',
-                    '[COMPANY]',
-                    '[SITE_NAME]',
-                    '[EMAIL]',
-                    '[NAME]',
-                    '[IP]',
-                    '[FB]',
-                    '[TW]',
-                    '[CEMAIL]',
-                    '[SITEURL]'
-                ), array(
-                    $core->plogo,
-                    date('Y'),
-                    $core->company,
-                    $core->company,
-                    $safe->email,
-                    $data['fname'] . ' ' . $data['lname'],
-                    Url::getIP(),
-                    $core->social->facebook,
-                    $core->social->twitter,
-                    $core->site_email,
-                    SITEURL
-                ), $tpl2->body);
+            //     $body2 = str_replace(array(
+            //         '[LOGO]',
+            //         '[DATE]',
+            //         '[COMPANY]',
+            //         '[SITE_NAME]',
+            //         '[EMAIL]',
+            //         '[NAME]',
+            //         '[IP]',
+            //         '[FB]',
+            //         '[TW]',
+            //         '[CEMAIL]',
+            //         '[SITEURL]'
+            //     ), array(
+            //         $core->plogo,
+            //         date('Y'),
+            //         $core->company,
+            //         $core->company,
+            //         $safe->email,
+            //         $data['fname'] . ' ' . $data['lname'],
+            //         Url::getIP(),
+            //         $core->social->facebook,
+            //         $core->social->twitter,
+            //         $core->site_email,
+            //         SITEURL
+            //     ), $tpl2->body);
 
-                $mailer2->Subject = $tpl2->subject;
-                $mailer2->Body = $body2;
-                $mailer2->setFrom($core->site_email, $core->company);
-                $mailer2->addAddress($core->site_email, $core->company);
-                $mailer2->isHTML();
-                $mailer2->send();
-            }
+            //     $mailer2->Subject = $tpl2->subject;
+            //     $mailer2->Body = $body2;
+            //     $mailer2->setFrom($core->site_email, $core->company);
+            //     $mailer2->addAddress($core->site_email, $core->company);
+            //     $mailer2->isHTML();
+            //     $mailer2->send();
+            // }
             if (Database::Go()->affected()) {
                 $json['type'] = 'success';
                 $json['title'] = Language::$word->SUCCESS;
-                $json['message'] = $message;
+                $json['message'] = 'Sucesso no registo do utilizador';
+                $json['object'] = null;
             } else {
                 $json['type'] = 'error';
                 $json['title'] = Language::$word->ERROR;
                 $json['message'] = Language::$word->M_INFO11;
+                $json['object'] = null;
             }
             print json_encode($json);
             return;
@@ -508,6 +512,7 @@ class Front
         }
     }
 
+    
     /**
      * news
      *
@@ -808,7 +813,6 @@ class Front
         if ($api) :
             $validate = Validator::run($_POST);
             $validate
-            
                 ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
                 ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
                 ->set('email', Language::$word->M_EMAIL)->required()->email();

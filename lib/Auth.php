@@ -382,7 +382,7 @@ class Auth
 
     public static function usernameExists(string $username): mixed
     {
-        return Database::Go()->select(User::mTable, array('username'))->where('usrename', $username, '=')->first()->run();
+        return Database::Go()->select(User::mTable, array('username'))->where('username', $username, '=')->first()->run();
     }
 
     /**

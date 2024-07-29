@@ -7,6 +7,20 @@ use Mpdf\MpdfException;
 const _Devxjs = true;
 require_once('../../init.php');
 
+
+
+function sendJson($data = null, $message = null, $httpCode = 200)
+{
+    header('Content-Type: application/json');
+    http_response_code($httpCode);
+    $response = [
+        'object' => $data,
+        'message' => $message
+    ];
+    echo json_encode($response);
+    exit;
+}
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
@@ -113,6 +127,17 @@ endswitch;
 /* == Get Actions == */
 switch ($gAction):
         //Invoice
+    case 'members':
+        $row = Database::Go()->select(Membership::mTable, array('id', 'title', 'price', 'days', 'period', 'thumb', 'description', 'private','active', 'body'))->where('active', true, '=')->orderBy('title', 'ASC')->run();
+
+        if($row):
+            sendJson($row);
+
+        else:
+            sendJson(null, 'Sem tipo de membro encontrado', 400);
+        endif;
+        break;
+
 
     case 'profile':
         App::Auth()->profile($data);
