@@ -801,24 +801,35 @@ class Front
      *
      * @return void
      */
-    public function updateProfile(): void
+    public function updateProfile($data = null): void
     {
+        $api = $data ? true : false;
         $core = App::Core();
-        $validate = Validator::run($_POST);
-        $validate
-            ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
-            ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
-            ->set('email', Language::$word->M_EMAIL)->required()->email()
-            ->set('newsletter', 'Instagram')->numeric();
-
-        if ($core->enable_tax) {
+        if ($api) :
+            $validate = Validator::run($_POST);
             $validate
-                ->set('address', Language::$word->M_ADDRESS)->required()->string()->min_len(3)->max_len(80)
-                ->set('city', Language::$word->M_CITY)->required()->string()->min_len(2)->max_len(60)
-                ->set('zip', Language::$word->M_ZIP)->required()->string()->min_len(3)->max_len(30)
-                ->set('state', Language::$word->M_STATE)->required()->string()->min_len(2)->max_len(60)
-                ->set('country', Language::$word->M_COUNTRY)->required()->string()->exact_len(2);
-        }
+            
+                ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
+                ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
+                ->set('email', Language::$word->M_EMAIL)->required()->email();
+        // ->set('newsletter', 'Instagram')->numeric();
+        else :
+            $validate = Validator::run($data);
+            $validate
+                ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
+                ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
+                ->set('email', Language::$word->M_EMAIL)->required()->email()
+                ->set('id', Language::$word->ID_USER)->required()->string();
+        endif;
+
+        // if ($core->enable_tax) {
+        //     $validate
+        //         ->set('address', Language::$word->M_ADDRESS)->required()->string()->min_len(3)->max_len(80)
+        //         ->set('city', Language::$word->M_CITY)->required()->string()->min_len(2)->max_len(60)
+        //         ->set('zip', Language::$word->M_ZIP)->required()->string()->min_len(3)->max_len(30)
+        //         ->set('state', Language::$word->M_STATE)->required()->string()->min_len(2)->max_len(60)
+        //         ->set('country', Language::$word->M_COUNTRY)->required()->string()->exact_len(2);
+        // }
 
         $thumb = File::upload('avatar', 512000, 'png,jpg,jpeg');
 

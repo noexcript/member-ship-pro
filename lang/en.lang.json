@@ -333,6 +333,7 @@
         "M_USERNAME_R4": "O nome de utilizador inserido não existe.",
         "M_USERNAME_R5": "Noem de utilizador inválido.",
         "M_FNAME": "Nome",
+        "ID_USER": "Sem utilizador identificado",
         "M_INF01": "Editar Descrição do Papel",
         "M_INFO": "Clique no rótulo de Acesso para conceder/rejeitar opções de acesso.",
         "M_INFO10": "E-mail e/ou token inválido detectado.",

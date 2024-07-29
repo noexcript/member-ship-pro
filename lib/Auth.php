@@ -259,6 +259,25 @@ class Auth
 
         return ($row) ?: 0;
     }
+    public function profile(mixed $data): mixed
+    {
+        $user_id = Validator::sanitize($data['user_id'], 'mixed');
+        $row = Database::Go()->select(User::mTable)->where('id', $user_id, '=')->first()->run();
+
+        if ($row) {
+            $json['object'] = $row;
+            $json['type'] = 'success';
+            $json["message"] = null;
+            $json['title'] = Language::$word->SUCCESS;
+        } else {
+            http_response_code(400);
+            $json['type'] = 'error';
+            $json["message"] = 'Utilizador não encontrado';
+            $json['title'] = Language::$word->ERROR;
+        }
+        // return ($row) ?: 0;
+        echo json_encode($json);
+    }
 
     /**
      * getAcl

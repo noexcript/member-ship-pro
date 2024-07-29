@@ -53,10 +53,7 @@ switch ($pAction):
 
         //Update Profile
     case 'profile':
-        if (!App::Auth()->is_User()) {
-            exit;
-        }
-        App::Front()->updateProfile();
+        App::Front()->updateProfile($data);
         break;
 
         //Select Membership
@@ -116,6 +113,10 @@ endswitch;
 /* == Get Actions == */
 switch ($gAction):
         //Invoice
+
+    case 'profile':
+        App::Auth()->profile($data);
+        break;
     case 'invoice':
         if (!App::Auth()->is_User()) {
             exit;
