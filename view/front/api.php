@@ -1,14 +1,5 @@
 <?php
 
-/**
- * controller
- *
- * @package Wojo Framework
- * @author wojoscripts.com
- * @copyright 2023
- * @version 5.00: controller.php, v1.00 7/12/2023 10:25 AM Gewa Exp $
- *
- */
 
 use Mpdf\Mpdf;
 use Mpdf\MpdfException;
@@ -16,23 +7,32 @@ use Mpdf\MpdfException;
 const _Devxjs = true;
 require_once('../../init.php');
 
-$delete = Validator::post('delete');
-$trash = Validator::post('trash');
-$pAction = Validator::post('action');
-$gAction = Validator::get('action');
-$restore = Validator::post('restore');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// Responder às requisições OPTIONS antes de prosseguir
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    header('HTTP/1.1 200 OK');
+    exit;
+}
+header('Content-Type: application/json');
+
+$data = json_decode(file_get_contents("php://input"), true);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $pAction = $data['action'];
+} else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $gAction = $data['action'];
+}
+
 $title = Validator::post('title') ? Validator::sanitize($_POST['title']) : null;
 
-// $data = json_decode(file_get_contents("php://input"), true);
-// print_r($_POST);
-// print_r($data);
-// exit;
 /* == Post Actions == */
 switch ($pAction):
         //Login
     case 'userLogin':
     case 'adminLogin':
-        App::Auth()->login($_POST['username'], $_POST['password']);
+        App::Auth()->login($data['username'], $data['password']);
         break;
 
         //Password Reset
@@ -43,7 +43,7 @@ switch ($pAction):
 
         //Register
     case 'register':
-        App::Front()->Registration();
+        App::Front()->Registration($data);
         break;
 
         //Pass Change

@@ -207,52 +207,68 @@ class Front
      * @throws NotFoundException
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function registration(): void
+    public function registration($data = null): void
     {
-        $validate = Validator::run($_POST);
+        if ($data == null) {
+            $validate = Validator::run($_POST);
+        } else {
+
+            $validate = Validator::run($data);
+        }
         $core = App::Core();
         $validate
-            ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
-            ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
+            ->set('username', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
             ->set('password', Language::$word->M_PASSWORD)->required()->string()->min_len(8)->max_len(16)
-            ->set('email', Language::$word->M_EMAIL)->required()->email()
-            ->set('agree', Language::$word->PRIVACY)->required()->numeric()
-            ->set('captcha', Language::$word->CAPTCHA)->required()->numeric()->equals(Session::get('wcaptcha'))->exact_len(5);
+            ->set('email', Language::$word->M_EMAIL)->required()->email();
+        // ->set('agree', Language::$word->PRIVACY)->required()->numeric();
+        // ->set('captcha', Language::$word->CAPTCHA)->required()->numeric()->equals(Session::get('wcaptcha'))->exact_len(5);
 
-        if ($core->enable_tax) {
-            $validate
-                ->set('address', Language::$word->M_ADDRESS)->required()->string()->min_len(3)->max_len(80)
-                ->set('city', Language::$word->M_CITY)->required()->string()->min_len(2)->max_len(60)
-                ->set('zip', Language::$word->M_ZIP)->required()->string()->min_len(3)->max_len(30)
-                ->set('state', Language::$word->M_STATE)->required()->string()->min_len(2)->max_len(60)
-                ->set('country', Language::$word->M_COUNTRY)->required()->string()->exact_len(2);
-        }
+
+        // if ($core->enable_tax) {
+        //     $validate
+        //         ->set('address', Language::$word->M_ADDRESS)->required()->string()->min_len(3)->max_len(80)
+        //         ->set('city', Language::$word->M_CITY)->required()->string()->min_len(2)->max_len(60)
+        //         ->set('zip', Language::$word->M_ZIP)->required()->string()->min_len(3)->max_len(30)
+        //         ->set('state', Language::$word->M_STATE)->required()->string()->min_len(2)->max_len(60)
+        //         ->set('country', Language::$word->M_COUNTRY)->required()->string()->exact_len(2);
+        // }
+
 
         $safe = $validate->safe();
-
         if (strlen($safe->email)) {
             if (Auth::emailExists($safe->email)) {
                 Message::$msgs['email'] = Language::$word->M_EMAIL_R2;
+                if ($data != null) {
+                    http_response_code(400);
+                    Message::msgSingleStatus($data);
+                    return;
+                }
+            }
+        }
+        if (strlen($safe->username)) {
+            if (Auth::usernameExists($safe->username)) {
+                Message::$msgs['username'] = Language::$word->M_USERNAME_R2;
+
+                if ($data != null) {
+                    http_response_code(400);
+                    Message::msgSingleStatus($data);
+                    return;
+                }
             }
         }
         Content::verifyCustomFields();
         if (count(Message::$msgs) === 0) {
             $hash = Auth::doHash($safe->password);
-            $username = Utility::randomString();
-
-            if ($core->reg_verify == 1) {
-                $active = 't';
-            } elseif ($core->auto_verify == 0) {
+            // if ($core->reg_verify == 1) {
+            //     $active = 't';
+            if ($core->auto_verify == 0) :
                 $active = 'n';
-            } else {
+            else :
                 $active = 'y';
-            }
-
+            endif;
             $data = array(
-                'username' => $username,
                 'email' => $safe->email,
-                'lname' => $safe->lname,
-                'fname' => $safe->fname,
+                'username' => $safe->username,
                 'hash' => $hash,
                 'type' => 'member',
                 'token' => Utility::randNumbers(),
@@ -260,13 +276,15 @@ class Front
                 'userlevel' => 1,
             );
 
-            if ($core->enable_tax) {
-                $data['address'] = $safe->address;
-                $data['city'] = $safe->city;
-                $data['state'] = $safe->state;
-                $data['zip'] = $safe->zip;
-                $data['country'] = $safe->country;
-            }
+
+
+            // if ($core->enable_tax) {
+            //     $data['address'] = $safe->address;
+            //     $data['city'] = $safe->city;
+            //     $data['state'] = $safe->state;
+            //     $data['zip'] = $safe->zip;
+            //     $data['country'] = $safe->country;
+            // }
 
             $last_id = Database::Go()->insert(User::mTable, $data)->run();
 
@@ -484,8 +502,9 @@ class Front
                 $json['message'] = Language::$word->M_INFO11;
             }
             print json_encode($json);
+            return;
         } else {
-            Message::msgSingleStatus();
+            Message::msgSingleStatus($data);
         }
     }
 

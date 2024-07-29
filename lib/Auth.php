@@ -113,7 +113,7 @@ class Auth
      * @param bool $auto
      * @return void
      */
-    public function login(string $username, string $password, bool $auto = false, $api = false): void
+    public function login(string $username, string $password, bool $auto = false): void
     {
         if ($username == '' && $password == '') {
             Message::$msgs['username'] = Language::$word->LOGIN_R5;
@@ -125,24 +125,28 @@ class Auth
                 case 'e':
                     Message::$msgs['username'] = Language::$word->LOGIN_R1;
                     $json['message'] = Language::$word->LOGIN_R1;
+                    $json['object'] = null;
                     break;
 
                 case 'b':
                     Message::$msgs['username'] = Language::$word->LOGIN_R2;
                     $json['message'] = Language::$word->LOGIN_R2;
+                    $json['object'] = null;
                     break;
 
                 case 'n':
                     Message::$msgs['username'] = Language::$word->LOGIN_R3;
                     $json['message'] = Language::$word->LOGIN_R3;
+                    $json['object'] = null;
                     break;
 
-                case 't':
-                    Message::$msgs['username'] = Language::$word->LOGIN_R4;
-                    $json['message'] = Language::$word->LOGIN_R4;
-                    break;
+                    // case 't':
+                    //     Message::$msgs['username'] = Language::$word->LOGIN_R4;
+                    //     $json['message'] = Language::$word->LOGIN_R4;
+                    //     break;
             }
         }
+
         if (count(Message::$msgs) === 0 && $status == 'y') {
             $row = $this->getUserInfo($username);
             $this->uid = Session::set('userid', $row->id);
@@ -172,13 +176,27 @@ class Auth
             self::$userdata = Session::set('userdata', $row);
             self::setUserCookies(Session::get('MMP_username'), Session::get('fullname'), Session::get('avatar'));
 
+
+            $json['object'] = [
+                "user" => [
+                    "id" => $row->id,
+                    "username" => $row->username,
+                    "email" => $row->email,
+                    "type" => $row->type,
+                    "userlevel" => $row->userlevel
+                ]
+            ];
+
             $json['type'] = 'success';
+            $json["message"] = 'Sucesso ao fazer login';
             $json['title'] = Language::$word->SUCCESS;
         } else {
+            http_response_code(400);
             $json['type'] = 'error';
             $json['title'] = Language::$word->ERROR;
         }
         if (!$auto) {
+
             print json_encode($json);
         }
     }
@@ -207,6 +225,7 @@ class Auth
             return 'e';
         }
 
+
         switch ($row->active) {
             case 'b':
                 return 'b';
@@ -216,9 +235,9 @@ class Auth
                 return 'n';
                 break;
 
-            case 't':
-                return 't';
-                break;
+                // case 't':
+                //     return 't';
+                // break;
 
             case 'y' and $validPass == true:
                 if (password_needs_rehash($row->hash, PASSWORD_DEFAULT, array('cost' => self::cost))) {
@@ -229,6 +248,8 @@ class Auth
                 return 'y';
                 break;
         }
+        print_r($row);
+        exit;
     }
 
     public function getUserInfo(string $username): mixed
@@ -317,27 +338,32 @@ class Auth
      * @param string $username
      * @return false|int
      */
-    public static function usernameExists(string $username): false|int
-    {
-        $username = Validator::sanitize($username, 'string');
-        if (strlen($username) < 4) {
-            return 1;
-        }
+    // public static function usernameExists(string $username): false|int
+    // {
+    //     $username = Validator::sanitize($username, 'string');
+    //     if (strlen($username) < 4) {
+    //         return 1;
+    //     }
 
-        //Username should contain only alphabets, numbers, or underscores.Should be between 4 to 15 characters long
-        $valid_uname = '/^[a-zA-Z0-9_]{4,15}$/';
-        if (!preg_match($valid_uname, $username)) {
-            return 2;
-        }
+    //     //Username should contain only alphabets, numbers, or underscores.Should be between 4 to 15 characters long
+    //     $valid_uname = '/^[a-zA-Z0-9_]{4,15}$/';
+    //     if (!preg_match($valid_uname, $username)) {
+    //         return 2;
+    //     }
 
-        $row = Database::Go()->select(User::mTable, array('username'))->where('username', $username, '=')->first()->run();
+    //     $row = Database::Go()->select(User::mTable, array('username'))->where('username', $username, '=')->first()->run();
 
-        return ($row) ? 3 : false;
-    }
+    //     return ($row) ? 3 : false;
+    // }
 
     public static function emailExists(string $email): mixed
     {
         return Database::Go()->select(User::mTable, array('email'))->where('email', $email, '=')->first()->run();
+    }
+
+    public static function usernameExists(string $username): mixed
+    {
+        return Database::Go()->select(User::mTable, array('username'))->where('usrename', $username, '=')->first()->run();
     }
 
     /**

@@ -18,7 +18,8 @@ $router->mount('/api/v1', function () use ($router, $tpl) {
     //admin index
     $router->get('/', 'Api@index');
 
-    $router->match('GET|POST', '/login', 'Api@login');
+
+    $router->post('/login', 'Api@login');
   
 
     //admin users

@@ -140,19 +140,24 @@ class Message
      *
      * @return void
      */
-    public static function msgSingleStatus(): void
+    public static function msgSingleStatus($data = null): void
     {
-        $html = "<div class=\"wojo small list\">";
+        $html = $data == null ? "<div class=\"wojo small list\">" :  '';
         $i = 1;
         foreach (self::$msgs as $msg) {
-            $html .= "<div class=\"item align middle\"><b>" . $i . '.</b> ' . $msg . "</div>\n";
+            if ($data == null) :
+                $html .= "<div class=\"item align middle\"><b>" . $i . '.</b> ' . $msg . "</div>\n";
+            else :
+                $html .= $msg;
+            endif;
             $i++;
         }
-        $html .= '</div>';
+        $html .= $data == null ? '</div>' : '';
 
         $json['type'] = 'error';
         $json['title'] = Language::$word->PROCCESS_ERR;
         $json['message'] = $html;
+        $json["object"] = null;
         print json_encode($json);
     }
 

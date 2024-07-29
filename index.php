@@ -17,5 +17,4 @@ $core = App::Core();
 $router = new Router();
 $tpl = App::View(BASEPATH . 'view/');
 
-include('./routes/api.php');
 include('./routes/web.php');

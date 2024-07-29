@@ -265,7 +265,7 @@ class Session
      *
      * @return true
      */
-    public function closeSession(): true
+    public function closeSession()
     {
         return true;
     }
