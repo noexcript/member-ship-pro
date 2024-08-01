@@ -512,7 +512,7 @@ class Front
         }
     }
 
-    
+
     /**
      * news
      *
@@ -810,20 +810,20 @@ class Front
     {
         $api = $data ? true : false;
         $core = App::Core();
-        if ($api) :
+        if (!$api) :
             $validate = Validator::run($_POST);
             $validate
                 ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
-                ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
+                // ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
                 ->set('email', Language::$word->M_EMAIL)->required()->email();
         // ->set('newsletter', 'Instagram')->numeric();
         else :
             $validate = Validator::run($data);
             $validate
                 ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
-                ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
+                // ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
                 ->set('email', Language::$word->M_EMAIL)->required()->email()
-                ->set('id', Language::$word->ID_USER)->required()->string();
+                ->set('user_id', Language::$word->ID_USER)->required()->string();
         endif;
 
         // if ($core->enable_tax) {
@@ -837,6 +837,12 @@ class Front
 
         $thumb = File::upload('avatar', 512000, 'png,jpg,jpeg');
 
+        // print_r($data);
+        // print_r($thumb);
+        // exit;
+
+
+
         Content::verifyCustomFields();
         $safe = $validate->safe();
 
@@ -845,20 +851,25 @@ class Front
                 'email' => $safe->email,
                 'lname' => $safe->lname,
                 'fname' => $safe->fname,
-                'newsletter' => (strlen($safe->newsletter) ? 1 : 0)
+                // 'newsletter' => (strlen($safe->newsletter) ? 1 : 0)
             );
 
-            if ($core->enable_tax) {
-                $data['address'] = $safe->address;
-                $data['city'] = $safe->city;
-                $data['zip'] = $safe->zip;
-                $data['state'] = $safe->state;
-                $data['country'] = $safe->country;
-            }
-
-            if (strlen($_POST['password'])) {
-                $data['hash'] = Auth::doHash($_POST['password']);
-            }
+            // if ($core->enable_tax) {
+            //     $data['address'] = $safe->address;
+            //     $data['city'] = $safe->city;
+            //     $data['zip'] = $safe->zip;
+            //     $data['state'] = $safe->state;
+            //     $data['country'] = $safe->country;
+            // }
+            if ($api) :
+                if (strlen($data['password'])) :
+                    $data['hash'] = Auth::doHash($data['password']);
+                endif;
+            else :
+                if (strlen($_POST['password'])) :
+                    $data['hash'] = Auth::doHash($_POST['password']);
+                endif;
+            endif;
 
             if (array_key_exists('avatar', $_FILES)) {
                 $thumbPath = UPLOADS . '/avatars/';
@@ -891,6 +902,8 @@ class Front
                     Auth::$udata->country = Session::set('country', $data['country']);
                 }
             }
+
+
         } else {
             Message::msgSingleStatus();
         }

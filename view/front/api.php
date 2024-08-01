@@ -23,7 +23,7 @@ function sendJson($data = null, $message = null, $httpCode = 200)
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Responder às requisições OPTIONS antes de prosseguir
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -32,7 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 header('Content-Type: application/json');
 
-$data = json_decode(file_get_contents("php://input"), true);
+if ($_POST && $_FILES) :
+    $data = $_POST;
+else :
+    $data = json_decode(file_get_contents("php://input"), true);
+endif;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pAction = $data['action'];
 } else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -59,7 +64,6 @@ switch ($pAction):
     case 'register':
         App::Front()->Registration($data);
         break;
-
         //Pass Change
     case 'password':
         App::Front()->passwordChange();
@@ -128,17 +132,13 @@ endswitch;
 switch ($gAction):
         //Invoice
     case 'members':
-        $row = Database::Go()->select(Membership::mTable, array('id', 'title', 'price', 'days', 'period', 'thumb', 'description', 'private','active', 'body'))->where('active', true, '=')->orderBy('title', 'ASC')->run();
-
-        if($row):
+        $row = Database::Go()->select(Membership::mTable, array('id', 'title', 'price', 'days', 'period', 'thumb', 'description', 'private', 'active', 'body'))->where('active', true, '=')->orderBy('title', 'ASC')->run();
+        if ($row) :
             sendJson($row);
-
-        else:
+        else :
             sendJson(null, 'Sem tipo de membro encontrado', 400);
         endif;
         break;
-
-
     case 'profile':
         App::Auth()->profile($data);
         break;
@@ -146,7 +146,6 @@ switch ($gAction):
         if (!App::Auth()->is_User()) {
             exit;
         }
-
         if ($row = User::getInvoice(Filter::$id)) {
             $tpl = App::View(BASEPATH . 'view/front/snippets/');
             $tpl->row = $row;
