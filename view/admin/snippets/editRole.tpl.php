@@ -1,16 +1,17 @@
 <?php
-   /**
-    * editRole
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: editRole.tpl.php, v1.00 7/7/2023 11:28 AM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * editRole
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: editRole.tpl.php, v1.00 7/7/2023 11:28 AM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <div class="body">
    <div class="wojo small form">

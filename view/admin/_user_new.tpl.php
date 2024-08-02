@@ -1,19 +1,20 @@
 <?php
-   /**
-    * _users_new
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: _users_new.tpl.php, v1.00 7/6/2023 4:10 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
-   if (!Auth::hasPrivileges('add_user')): print Message::msgError(Language::$word->NOACCESS);
-      return;
-   endif;
+
+/**
+ * _users_new
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: _users_new.tpl.php, v1.00 7/6/2023 4:10 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
+if (!Auth::hasPrivileges('add_user')) : print Message::msgError(Language::$word->NOACCESS);
+   return;
+endif;
 ?>
 <form method="post" id="wojo_form" name="wojo_form">
    <div class="wojo segment form">
@@ -65,9 +66,7 @@
          <div class="field">
             <label><?php echo Language::$word->M_SUB15; ?></label>
             <div class="wojo icon input" data-datepicker="true">
-               <input placeholder="<?php echo Language::$word->TO; ?>" name="mem_expire" type="text"
-                      value="<?php echo Date::doDate('calendar', Date::numberOfDays('+ 30 day')); ?>" readonly
-                      class="datepick">
+               <input placeholder="<?php echo Language::$word->TO; ?>" name="mem_expire" type="text" value="<?php echo Date::doDate('calendar', Date::numberOfDays('+ 30 day')); ?>" readonly class="datepick">
                <i class="icon calendar alt"></i>
             </div>
          </div>
@@ -90,7 +89,8 @@
       </div>
       <div class="padding-top">
          <h5><?php echo Language::$word->CF_TITLE; ?></h5>
-         <?php echo $this->custom_fields; ?></div>
+         <?php echo $this->custom_fields; ?>
+      </div>
       <div class="wojo auto very wide divider"></div>
       <div class="wojo fields align-middle">
          <div class="field four wide labeled">
@@ -133,9 +133,9 @@
       <div class="wojo auto very wide divider"></div>
       <h5><?php echo Language::$word->M_SUB26; ?></h5>
       <div class="wojo scrollbox height300">
-         <?php if ($this->userfiles): ?>
+         <?php if ($this->userfiles) : ?>
             <div class="row grid small gutters screen-4 tablet-3 mobile-1 phone-1">
-               <?php foreach ($this->userfiles as $file): ?>
+               <?php foreach ($this->userfiles as $file) : ?>
                   <div class="columns">
                      <div class="wojo checkbox inline fitted">
                         <input type="checkbox" name="user_files[]" value="<?php echo $file->id; ?>" id="user_files_<?php echo $file->id; ?>">
@@ -210,9 +210,7 @@
       </div>
    </div>
    <div class="center-align margin-top">
-      <a href="<?php echo Url::url('/admin/users'); ?>"
-         class="wojo simple small button"><?php echo Language::$word->CANCEL; ?></a>
-      <button type="button" data-action="processUser" name="dosubmit"
-              class="wojo primary button"><?php echo Language::$word->M_TITLE5; ?></button>
+      <a href="<?php echo Url::url('/admin/users'); ?>" class="wojo simple small button"><?php echo Language::$word->CANCEL; ?></a>
+      <button type="button" data-action="processUser" name="dosubmit" class="wojo primary button"><?php echo Language::$word->M_TITLE5; ?></button>
    </div>
 </form>

@@ -1,18 +1,19 @@
 <?php
-   /**
-    * maintenance
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: maintenance.tpl.php, v1.00 7/8/2023 9:53 AM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
 
-   App::Auth()->checkOwner();
+/**
+ * maintenance
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: maintenance.tpl.php, v1.00 7/8/2023 9:53 AM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
+
+App::Auth()->checkOwner();
 ?>
 <form method="post" name="wojo_forma">
    <div class="wojo form segment margin-bottom">

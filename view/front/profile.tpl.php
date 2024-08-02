@@ -1,16 +1,17 @@
 <?php
-   /**
-    * profile
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: profile.tpl.php, v1.00 7/17/2023 12:49 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * profile
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: profile.tpl.php, v1.00 7/17/2023 12:49 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <main>
    <div class="padding-vertical">
@@ -29,7 +30,7 @@
          <form method="post" id="wojo_form" name="wojo_form">
             <div class="wojo segment form">
                <div class="margin-bottom">
-                  <input type="file" name="avatar" data-type="image" data-exist="<?php echo ($this->data->avatar)? UPLOADURL . '/avatars/' . $this->data->avatar : UPLOADURL . '/avatars/default.svg'; ?>" accept="image/png, image/jpeg">
+                  <input type="file" name="avatar" data-type="image" data-exist="<?php echo ($this->data->avatar) ? UPLOADURL . '/avatars/' . $this->data->avatar : UPLOADURL . '/avatars/default.svg'; ?>" accept="image/png, image/jpeg">
                </div>
                <div class="wojo fields">
                   <div class="field five wide">
@@ -60,13 +61,13 @@
                <div class="wojo fields justify-center">
                   <div class="field auto">
                      <label><?php echo Language::$word->MEMBERSHIP; ?></label>
-                     <?php echo ($this->data->membership_id)? $this->data->mtitle . '<small> @' . Date::doDate('short_date', $this->data->mem_expire) . '</small>' : Language::$word->NONE; ?>
+                     <?php echo ($this->data->membership_id) ? $this->data->mtitle . '<small> @' . Date::doDate('short_date', $this->data->mem_expire) . '</small>' : Language::$word->NONE; ?>
                   </div>
                </div>
-               <?php if ($this->custom_fields): ?>
+               <?php if ($this->custom_fields) : ?>
                   <?php echo $this->custom_fields; ?>
                <?php endif; ?>
-               <?php if ($this->core->enable_tax): ?>
+               <?php if ($this->core->enable_tax) : ?>
                   <div class="wojo fields align-middle">
                      <div class="field four wide labeled">
                         <label><?php echo Language::$word->M_ADDRESS; ?></label>

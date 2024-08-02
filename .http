@@ -1,0 +1,10 @@
+
+
+POST http://localhost/members/view/front/api.php
+Content-Type: application/json
+
+{
+    "action": "userAction",
+    "username": "demo",
+    "password": "12345678"
+}

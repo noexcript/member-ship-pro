@@ -1,19 +1,20 @@
 <?php
-   /**
-    * _users_edit
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: _users_edit.tpl.php, v1.00 7/6/2023 4:10 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
-   if (!Auth::hasPrivileges('edit_user')): print Message::msgError(Language::$word->NOACCESS);
-      return;
-   endif;
+
+/**
+ * _users_edit
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: _users_edit.tpl.php, v1.00 7/6/2023 4:10 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
+if (!Auth::hasPrivileges('edit_user')) : print Message::msgError(Language::$word->NOACCESS);
+   return;
+endif;
 ?>
 <form method="post" id="wojo_form" name="wojo_form">
    <div class="wojo segment form">
@@ -23,8 +24,7 @@
                <i class="icon asterisk"></i>
             </label>
             <div class="wojo large basic input">
-               <input type="text" placeholder="<?php echo Language::$word->M_FNAME; ?>" value="<?php echo $this->data->fname; ?>"
-                      name="fname">
+               <input type="text" placeholder="<?php echo Language::$word->M_FNAME; ?>" value="<?php echo $this->data->fname; ?>" name="fname">
             </div>
          </div>
          <div class="field">
@@ -32,8 +32,7 @@
                <i class="icon asterisk"></i>
             </label>
             <div class="wojo large basic input">
-               <input type="text" placeholder="<?php echo Language::$word->M_LNAME; ?>" value="<?php echo $this->data->lname; ?>"
-                      name="lname">
+               <input type="text" placeholder="<?php echo Language::$word->M_LNAME; ?>" value="<?php echo $this->data->lname; ?>" name="lname">
             </div>
          </div>
       </div>
@@ -42,8 +41,7 @@
             <label><?php echo Language::$word->M_EMAIL; ?>
                <i class="icon asterisk"></i>
             </label>
-            <input type="text" placeholder="<?php echo Language::$word->M_EMAIL; ?>" value="<?php echo $this->data->email; ?>"
-                   name="email">
+            <input type="text" placeholder="<?php echo Language::$word->M_EMAIL; ?>" value="<?php echo $this->data->email; ?>" name="email">
          </div>
          <div class="field">
             <label><?php echo Language::$word->NEWPASS; ?></label>
@@ -68,9 +66,7 @@
          <div class="field">
             <label><?php echo Language::$word->M_SUB15; ?></label>
             <div class="wojo icon input" data-datepicker="true">
-               <input placeholder="<?php echo Language::$word->TO; ?>" name="mem_expire" type="text"
-                      value="<?php echo Date::doDate('calendar', Date::numberOfDays('+ 30 day')); ?>" readonly
-                      class="datepick">
+               <input placeholder="<?php echo Language::$word->TO; ?>" name="mem_expire" type="text" value="<?php echo Date::doDate('calendar', Date::numberOfDays('+ 30 day')); ?>" readonly class="datepick">
                <i class="icon calendar alt"></i>
             </div>
          </div>
@@ -100,15 +96,15 @@
       </div>
       <div class="padding-top">
          <h5><?php echo Language::$word->CF_TITLE; ?></h5>
-         <?php echo $this->custom_fields; ?></div>
+         <?php echo $this->custom_fields; ?>
+      </div>
       <div class="wojo auto very wide divider"></div>
       <div class="wojo fields align-middle">
          <div class="field four wide labeled">
             <label><?php echo Language::$word->M_ADDRESS; ?></label>
          </div>
          <div class="field">
-            <input type="text" placeholder="<?php echo Language::$word->M_ADDRESS; ?>"
-                   value="<?php echo $this->data->address; ?>" name="address">
+            <input type="text" placeholder="<?php echo Language::$word->M_ADDRESS; ?>" value="<?php echo $this->data->address; ?>" name="address">
          </div>
       </div>
       <div class="wojo fields align-middle">
@@ -116,8 +112,7 @@
             <label><?php echo Language::$word->M_CITY; ?></label>
          </div>
          <div class="field">
-            <input type="text" placeholder="<?php echo Language::$word->M_CITY; ?>" value="<?php echo $this->data->city; ?>"
-                   name="city">
+            <input type="text" placeholder="<?php echo Language::$word->M_CITY; ?>" value="<?php echo $this->data->city; ?>" name="city">
          </div>
       </div>
       <div class="wojo fields align-middle">
@@ -125,8 +120,7 @@
             <label><?php echo Language::$word->M_STATE; ?></label>
          </div>
          <div class="field">
-            <input type="text" placeholder="<?php echo Language::$word->M_STATE; ?>" value="<?php echo $this->data->state; ?>"
-                   name="state">
+            <input type="text" placeholder="<?php echo Language::$word->M_STATE; ?>" value="<?php echo $this->data->state; ?>" name="state">
          </div>
       </div>
       <div class="wojo fields align-middle">
@@ -134,8 +128,7 @@
             <label><?php echo Language::$word->M_COUNTRY; ?>/<?php echo Language::$word->M_ZIP; ?></label>
          </div>
          <div class="field">
-            <input type="text" placeholder="<?php echo Language::$word->M_ZIP; ?>" value="<?php echo $this->data->zip; ?>"
-                   name="zip">
+            <input type="text" placeholder="<?php echo Language::$word->M_ZIP; ?>" value="<?php echo $this->data->zip; ?>" name="zip">
          </div>
          <div class="field">
             <select name="country">
@@ -147,13 +140,13 @@
       <div class="wojo auto very wide divider"></div>
       <h5><?php echo Language::$word->M_SUB26; ?></h5>
       <div class="wojo scrollbox height300">
-         <?php if ($this->userfiles): ?>
+         <?php if ($this->userfiles) : ?>
             <div class="row grid small gutters screen-4 tablet-3 mobile-1 phone-1">
-               <?php foreach ($this->userfiles as $file): ?>
-                  <?php $is_checked = in_array($file->id, explode(',', $this->data->user_files))? ' checked="checked"' : null; ?>
+               <?php foreach ($this->userfiles as $file) : ?>
+                  <?php $is_checked = in_array($file->id, explode(',', $this->data->user_files)) ? ' checked="checked"' : null; ?>
                   <div class="columns">
                      <div class="wojo checkbox inline fitted">
-                        <input type="checkbox" name="user_files[]" value="<?php echo $file->id; ?>"<?php echo $is_checked; ?> id="user_files_<?php echo $file->id; ?>">
+                        <input type="checkbox" name="user_files[]" value="<?php echo $file->id; ?>" <?php echo $is_checked; ?> id="user_files_<?php echo $file->id; ?>">
                         <label for="user_files_<?php echo $file->id; ?>"><?php echo Validator::truncate($file->alias, 30); ?></label>
                      </div>
                   </div>
@@ -170,7 +163,7 @@
             </div>
             <div class="field">
                <label><?php echo Language::$word->M_LASTLOGIN; ?></label>
-               <?php echo $this->data->lastlogin? Date::doDate('long_date', $this->data->lastlogin) : Language::$word->NEVER; ?>
+               <?php echo $this->data->lastlogin ? Date::doDate('long_date', $this->data->lastlogin) : Language::$word->NEVER; ?>
             </div>
             <div class="field">
                <label><?php echo Language::$word->M_LASTIP; ?></label>
@@ -181,54 +174,45 @@
             <div class="fitted field">
                <label><?php echo Language::$word->STATUS; ?></label>
                <div class="wojo checkbox radio fitted inline">
-                  <input name="active" type="radio" value="y"
-                         id="active_y" <?php echo Validator::getChecked($this->data->active, 'y'); ?>>
+                  <input name="active" type="radio" value="y" id="active_y" <?php echo Validator::getChecked($this->data->active, 'y'); ?>>
                   <label for="active_y"><?php echo Language::$word->ACTIVE; ?></label>
                </div>
                <div class="wojo checkbox radio fitted inline">
-                  <input name="active" type="radio" value="n"
-                         id="active_n" <?php echo Validator::getChecked($this->data->active, 'n'); ?>>
+                  <input name="active" type="radio" value="n" id="active_n" <?php echo Validator::getChecked($this->data->active, 'n'); ?>>
                   <label for="active_n"><?php echo Language::$word->INACTIVE; ?></label>
                </div>
                <div class="wojo checkbox radio fitted inline">
-                  <input name="active" type="radio" value="t"
-                         id="active_t" <?php echo Validator::getChecked($this->data->active, 't'); ?>>
+                  <input name="active" type="radio" value="t" id="active_t" <?php echo Validator::getChecked($this->data->active, 't'); ?>>
                   <label for="active_t"><?php echo Language::$word->PENDING; ?></label>
                </div>
                <div class="wojo checkbox radio fitted inline">
-                  <input name="active" type="radio" value="b"
-                         id="active_b" <?php echo Validator::getChecked($this->data->active, 'b'); ?>>
+                  <input name="active" type="radio" value="b" id="active_b" <?php echo Validator::getChecked($this->data->active, 'b'); ?>>
                   <label for="active_b"><?php echo Language::$word->BANNED; ?></label>
                </div>
             </div>
             <div class="fitted field">
                <label><?php echo Language::$word->M_SUB9; ?></label>
                <div class="wojo checkbox radio fitted inline">
-                  <input name="type" type="radio" value="staff"
-                         id="type_staff" <?php echo Validator::getChecked($this->data->type, 'staff'); ?>>
+                  <input name="type" type="radio" value="staff" id="type_staff" <?php echo Validator::getChecked($this->data->type, 'staff'); ?>>
                   <label for="type_staff"><?php echo Language::$word->STAFF; ?></label>
                </div>
                <div class="wojo checkbox radio fitted inline">
-                  <input name="type" type="radio" value="editor"
-                         id="type_editor" <?php echo Validator::getChecked($this->data->type, 'editor'); ?>>
+                  <input name="type" type="radio" value="editor" id="type_editor" <?php echo Validator::getChecked($this->data->type, 'editor'); ?>>
                   <label for="type_editor"><?php echo Language::$word->EDITOR; ?></label>
                </div>
                <div class="wojo checkbox radio fitted inline">
-                  <input name="type" type="radio" value="member"
-                         id="type_member" <?php echo Validator::getChecked($this->data->type, 'member'); ?>>
+                  <input name="type" type="radio" value="member" id="type_member" <?php echo Validator::getChecked($this->data->type, 'member'); ?>>
                   <label for="type_member"><?php echo Language::$word->MEMBER; ?></label>
                </div>
             </div>
             <div class="fitted field">
                <label><?php echo Language::$word->M_SUB10; ?></label>
                <div class="wojo checkbox radio fitted inline">
-                  <input name="newsletter" type="radio" value="1"
-                         id="newsletter_1" <?php echo Validator::getChecked($this->data->newsletter, 1); ?>>
+                  <input name="newsletter" type="radio" value="1" id="newsletter_1" <?php echo Validator::getChecked($this->data->newsletter, 1); ?>>
                   <label for="newsletter_1"><?php echo Language::$word->YES; ?></label>
                </div>
                <div class="wojo checkbox radio fitted inline">
-                  <input name="newsletter" type="radio" value="0"
-                         id="newsletter_0" <?php echo Validator::getChecked($this->data->newsletter, 0); ?>>
+                  <input name="newsletter" type="radio" value="0" id="newsletter_0" <?php echo Validator::getChecked($this->data->newsletter, 0); ?>>
                   <label for="newsletter_0"><?php echo Language::$word->NO; ?></label>
                </div>
             </div>
@@ -237,10 +221,8 @@
       <textarea placeholder="<?php echo Language::$word->M_SUB11; ?>" name="notes"><?php echo $this->data->notes; ?></textarea>
    </div>
    <div class="center-align margin-top">
-      <a href="<?php echo Url::url('/admin/users'); ?>"
-         class="wojo simple small button"><?php echo Language::$word->CANCEL; ?></a>
-      <button type="button" data-action="processUser" name="dosubmit"
-              class="wojo primary button"><?php echo Language::$word->M_UPDATE; ?></button>
+      <a href="<?php echo Url::url('/admin/users'); ?>" class="wojo simple small button"><?php echo Language::$word->CANCEL; ?></a>
+      <button type="button" data-action="processUser" name="dosubmit" class="wojo primary button"><?php echo Language::$word->M_UPDATE; ?></button>
    </div>
    <input type="hidden" name="id" value="<?php echo $this->data->id; ?>">
 </form>

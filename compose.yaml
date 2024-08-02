@@ -1,0 +1,24 @@
+services:
+  server:
+    build:
+      context: .
+    container_name: api-member
+    depends_on:
+      - mysql
+    ports:
+      - 9000:80
+    volumes:
+      - ./:/var/www/html
+  mysql:
+    image: mysql:5
+    container_name: mysql-member
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_member
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:

@@ -1,16 +1,17 @@
 <?php
-   /**
-    * _membership_edit
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: _membership_edit.tpl.php, v1.00 7/5/2023 7:35 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * _membership_edit
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: _membership_edit.tpl.php, v1.00 7/5/2023 7:35 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <form method="post" id="wojo_form" name="wojo_form">
    <div class="wojo simple segment form margin-bottom">
@@ -45,8 +46,7 @@
                <div class="field">
                   <div class="wojo labeled input">
                      <div class="wojo simple label"><?php echo Utility::currencySymbol(); ?></div>
-                     <input type="text" placeholder="<?php echo Language::$word->MEM_PRICE; ?>"
-                            value="<?php echo $this->data->price; ?>" name="price">
+                     <input type="text" placeholder="<?php echo Language::$word->MEM_PRICE; ?>" value="<?php echo $this->data->price; ?>" name="price">
                   </div>
                </div>
             </div>
@@ -114,7 +114,7 @@
          <div class="columns screen-30 tablet-40 mobile-100 phone-100">
             <div class="wojo block fields">
                <div class="field">
-                  <input type="file" name="thumb" data-type="image" data-exist="<?php echo ($this->data->thumb)? UPLOADURL . '/memberships/' . $this->data->thumb : UPLOADURL . '/memberships/default.svg'; ?>" accept="image/png, image/jpeg">
+                  <input type="file" name="thumb" data-type="image" data-exist="<?php echo ($this->data->thumb) ? UPLOADURL . '/memberships/' . $this->data->thumb : UPLOADURL . '/memberships/default.svg'; ?>" accept="image/png, image/jpeg">
                </div>
                <div class="field">
                   <label><?php echo Language::$word->DESCRIPTION; ?></label>

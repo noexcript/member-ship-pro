@@ -1,23 +1,24 @@
 <?php
-   /**
-    * register
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: register.tpl.php, v1.00 7/13/2023 11:52 AM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * register
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: register.tpl.php, v1.00 7/13/2023 11:52 AM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <main>
    <div class="wojo-grid">
       <div class="row justify-center height-full align-middle">
          <div class="columns screen-50 tablet-70 mobile-100 phone-100">
             <div class="logo">
-               <a href="<?php echo SITEURL; ?>/"><?php echo ($this->core->logo)? '<img src="' . SITEURL . '/uploads/' . $this->core->logo . '" alt="' . $this->core->company . '">' : $this->core->company; ?></a>
+               <a href="<?php echo SITEURL; ?>/"><?php echo ($this->core->logo) ? '<img src="' . SITEURL . '/uploads/' . $this->core->logo . '" alt="' . $this->core->company . '">' : $this->core->company; ?></a>
             </div>
             <div class="wojo segment">
                <form method="post" id="reg_form" name="reg_form">
@@ -59,7 +60,7 @@
                         </div>
                      </div>
                      <?php echo $this->custom_fields; ?>
-                     <?php if ($this->core->enable_tax): ?>
+                     <?php if ($this->core->enable_tax) : ?>
                         <div class="wojo block fields">
                            <div class="field">
                               <label><?php echo Language::$word->M_ADDRESS; ?>

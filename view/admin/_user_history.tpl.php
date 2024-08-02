@@ -1,21 +1,21 @@
 <?php
-   /**
-    * _users_history
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: _users_history.tpl.php, v1.00 7/6/2023 4:11 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * _users_history
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: _users_history.tpl.php, v1.00 7/6/2023 4:11 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <div class="row justify-end">
    <div class="columns auto mobile-100 phone-100">
-      <a href="<?php echo ADMINVIEW . '/helper.php?action=exportUserPayments&amp;id=' . $this->data->id; ?>"
-         class="wojo secondary fluid button">
+      <a href="<?php echo ADMINVIEW . '/helper.php?action=exportUserPayments&amp;id=' . $this->data->id; ?>" class="wojo secondary fluid button">
          <i class="icon wysiwyg table"></i><?php echo Language::$word->EXPORT; ?></a>
    </div>
 </div>
@@ -44,15 +44,15 @@
       <div data-tab="mem" class="item">
          <table class="wojo responsive basic table">
             <thead>
-            <tr>
-               <th><?php echo Language::$word->NAME; ?></th>
-               <th><?php echo Language::$word->MEM_ACT; ?></th>
-               <th><?php echo Language::$word->MEM_EXP; ?></th>
-               <th class="auto"><?php echo Language::$word->MEM_REC1; ?></th>
-            </tr>
+               <tr>
+                  <th><?php echo Language::$word->NAME; ?></th>
+                  <th><?php echo Language::$word->MEM_ACT; ?></th>
+                  <th><?php echo Language::$word->MEM_EXP; ?></th>
+                  <th class="auto"><?php echo Language::$word->MEM_REC1; ?></th>
+               </tr>
             </thead>
-            <?php if ($this->mlist): ?>
-               <?php foreach ($this->mlist as $mrow): ?>
+            <?php if ($this->mlist) : ?>
+               <?php foreach ($this->mlist as $mrow) : ?>
                   <tr>
                      <td>
                         <a href="<?php echo Url::url('/admin/memberships/edit', $mrow->membership_id); ?>"><?php echo $mrow->title; ?></a>
@@ -68,18 +68,18 @@
       <div data-tab="pay" class="item">
          <table class="wojo responsive basic table">
             <thead>
-            <tr>
-               <th><?php echo Language::$word->NAME; ?></th>
-               <th><?php echo Language::$word->TRX_AMOUNT; ?></th>
-               <th><?php echo Language::$word->TRX_TAX; ?></th>
-               <th><?php echo Language::$word->TRX_COUPON; ?></th>
-               <th><?php echo Language::$word->TRX_TOTAMT; ?></th>
-               <th><?php echo Language::$word->CREATED; ?></th>
-               <th class="auto"><?php echo Language::$word->STATUS; ?></th>
-            </tr>
+               <tr>
+                  <th><?php echo Language::$word->NAME; ?></th>
+                  <th><?php echo Language::$word->TRX_AMOUNT; ?></th>
+                  <th><?php echo Language::$word->TRX_TAX; ?></th>
+                  <th><?php echo Language::$word->TRX_COUPON; ?></th>
+                  <th><?php echo Language::$word->TRX_TOTAMT; ?></th>
+                  <th><?php echo Language::$word->CREATED; ?></th>
+                  <th class="auto"><?php echo Language::$word->STATUS; ?></th>
+               </tr>
             </thead>
-            <?php if ($this->plist): ?>
-               <?php foreach ($this->plist as $prow): ?>
+            <?php if ($this->plist) : ?>
+               <?php foreach ($this->plist as $prow) : ?>
                   <tr>
                      <td>
                         <a href="<?php echo Url::url('/admin/memberships/edit', $prow->membership_id); ?>"><?php echo $prow->title; ?></a>
@@ -103,19 +103,19 @@
 <script src="<?php echo SITEURL; ?>/assets/raphael.min.js"></script>
 <script type="text/javascript">
    // <![CDATA[
-   $(document).ready(function () {
+   $(document).ready(function() {
       $('#payment_chart').parent().addClass('loading');
       $.ajax({
          type: 'GET',
-         url: "<?php echo ADMINVIEW . '/helper.php';?>",
+         url: "<?php echo ADMINVIEW . '/helper.php'; ?>",
          data: {
             id: $.url().segment(-1),
             action: 'getUserPaymentsChart'
          },
          dataType: 'json'
-      }).done(function (json) {
+      }).done(function(json) {
          let legend = '';
-         json.legend.map(function (val) {
+         json.legend.map(function(val) {
             legend += val;
          });
          $('#legend').html(legend);
@@ -135,7 +135,7 @@
             fillOpacity: '.75',
             hideHover: 'auto',
             preUnits: json.preUnits,
-            hoverCallback: function (index, json, content) {
+            hoverCallback: function(index, json, content) {
                const text = $(content)[1].textContent;
                return content.replace(text, text.replace(json.preUnits, ''));
             },

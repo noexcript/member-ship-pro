@@ -1,16 +1,17 @@
 <?php
-   /**
-    * copyPage
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: copyPage.tpl.php, v1.00 7/3/2023 12:36 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * copyPage
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: copyPage.tpl.php, v1.00 7/3/2023 12:36 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <div class="body">
    <div class="wojo small form">
