@@ -134,6 +134,9 @@ endswitch;
 
 /* == Get Actions == */
 switch ($gAction):
+    case '/':
+        sendJson(null, 'Hello World');
+        break;
         //Invoice
     case 'members':
         $row = Database::Go()->select(Membership::mTable, array('id', 'title', 'price', 'days', 'period', 'thumb', 'description', 'private', 'active', 'body'))->where('active', true, '=')->orderBy('title', 'ASC')->run();
