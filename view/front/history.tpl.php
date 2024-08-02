@@ -1,21 +1,22 @@
 <?php
-   /**
-    * history
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: history.tpl.php, v1.00 7/17/2023 12:28 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * history
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: history.tpl.php, v1.00 7/17/2023 12:28 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <main>
    <div class="padding-vertical">
       <div class="center-align">
-         <img src="<?php echo UPLOADURL; ?>/avatars/<?php echo (App::Auth()->avatar)? App::Auth()->avatar : 'default.svg'; ?>" alt="" class="wojo normal inline rounded image">
+         <img src="<?php echo UPLOADURL; ?>/avatars/<?php echo (App::Auth()->avatar) ? App::Auth()->avatar : 'default.svg'; ?>" alt="" class="wojo normal inline rounded image">
       </div>
       <div class="wojo-grid">
          <div class="center-align margin-vertical">
@@ -29,18 +30,18 @@
                </a>
             </div>
          </div>
-         <?php if ($this->data): ?>
+         <?php if ($this->data) : ?>
             <table class="wojo simple segment table">
                <thead>
-               <tr>
-                  <th><?php echo Language::$word->NAME; ?></th>
-                  <th><?php echo Language::$word->MEM_ACT; ?></th>
-                  <th><?php echo Language::$word->MEM_EXP; ?></th>
-                  <th><?php echo Language::$word->MEM_REC1; ?></th>
-                  <th class="auto"></th>
-               </tr>
+                  <tr>
+                     <th><?php echo Language::$word->NAME; ?></th>
+                     <th><?php echo Language::$word->MEM_ACT; ?></th>
+                     <th><?php echo Language::$word->MEM_EXP; ?></th>
+                     <th><?php echo Language::$word->MEM_REC1; ?></th>
+                     <th class="auto"></th>
+                  </tr>
                </thead>
-               <?php foreach ($this->data as $mrow): ?>
+               <?php foreach ($this->data as $mrow) : ?>
                   <tr>
                      <td><?php echo $mrow->title; ?></td>
                      <td><?php echo Date::doDate('long_date', $mrow->activated); ?></td>

@@ -1,18 +1,19 @@
 <?php
-   /**
-    * configuration
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: configuration.tpl.php, v1.00 7/9/2023 10:27 AM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
 
-   App::Auth()->checkOwner();
+/**
+ * configuration
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: configuration.tpl.php, v1.00 7/9/2023 10:27 AM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
+
+App::Auth()->checkOwner();
 ?>
 <form method="post" id="wojo_form" name="wojo_form">
    <div class="wojo segment form margin-bottom">
@@ -127,7 +128,7 @@
          <div class="field three wide">
             <label><?php echo Language::$word->CG_LANG; ?></label>
             <select name="lang">
-               <?php foreach (Language::fetchLanguage() as $langlist): ?>
+               <?php foreach (Language::fetchLanguage() as $langlist) : ?>
                   <option value="<?php echo substr($langlist, 0, 2); ?>" <?php echo Validator::getSelected($this->data->lang, substr($langlist, 0, 2)); ?>><?php echo strtoupper(substr($langlist, 0, 2)); ?></option>
                <?php endforeach; ?>
             </select>
@@ -306,12 +307,12 @@
                <option value="SMTP" <?php echo Validator::getSelected($this->data->mailer, 'SMTP'); ?>>SMTP Mailer</option>
             </select>
          </div>
-         <div class="field showsmail<?php echo ($this->data->mailer == 'SMAIL')? '' : ' hide-all'; ?>">
+         <div class="field showsmail<?php echo ($this->data->mailer == 'SMAIL') ? '' : ' hide-all'; ?>">
             <label><?php echo Language::$word->CG_SMAILPATH; ?></label>
             <input type="text" placeholder="<?php echo Language::$word->CG_SMAILPATH; ?>" value="<?php echo $this->data->sendmail; ?>" name="sendmail">
          </div>
       </div>
-      <div class="showsmtp<?php echo ($this->data->mailer == 'SMTP')? '' : ' hide-all'; ?>">
+      <div class="showsmtp<?php echo ($this->data->mailer == 'SMTP') ? '' : ' hide-all'; ?>">
          <div class="wojo fields">
             <div class="field five wide">
                <label><?php echo Language::$word->CG_SMTP_HOST; ?>
@@ -353,8 +354,8 @@
 </form>
 <script type="text/javascript">
    // <![CDATA[
-   $(document).ready(function () {
-      $('#mailer_change').change(function () {
+   $(document).ready(function() {
+      $('#mailer_change').change(function() {
          let val = $('#mailer_change option:selected').val();
          if (val === 'SMTP') {
             $('.showsmtp').show();

@@ -1,36 +1,35 @@
 <?php
-   /**
-    * mailer
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: mailer.tpl.php, v1.00 7/8/2023 9:48 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
-   if (!Auth::hasPrivileges('manage_newsletter')): print Message::msgError(Language::$word->NOACCESS);
-      return;
-   endif;
+
+/**
+ * mailer
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: mailer.tpl.php, v1.00 7/8/2023 9:48 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
+if (!Auth::hasPrivileges('manage_newsletter')) : print Message::msgError(Language::$word->NOACCESS);
+   return;
+endif;
 ?>
 <form method="post" id="wojo_form" name="wojo_form">
    <div class="wojo segment form">
       <div class="wojo fields">
          <div class="field disabled">
             <label><?php echo Language::$word->NL_FROM; ?></label>
-            <input type="text" disabled placeholder="<?php echo Language::$word->NL_FROM; ?>"
-                   value="<?php echo $this->core->site_email; ?>" name="site_email">
+            <input type="text" disabled placeholder="<?php echo Language::$word->NL_FROM; ?>" value="<?php echo $this->core->site_email; ?>" name="site_email">
          </div>
          <div class="field">
             <label><?php echo Language::$word->NL_RCPT; ?>
                <i class="icon asterisk"></i>
             </label>
-            <?php if (Validator::get('email')): ?>
-               <input type="text" placeholder="<?php echo Language::$word->NL_RCPT; ?>"
-                      value="<?php echo Validator::get('email'); ?>" readonly name="recipient">
-            <?php else: ?>
+            <?php if (Validator::get('email')) : ?>
+               <input type="text" placeholder="<?php echo Language::$word->NL_RCPT; ?>" value="<?php echo Validator::get('email'); ?>" readonly name="recipient">
+            <?php else : ?>
                <select name="recipient">
                   <option value="all"><?php echo Language::$word->NL_UALL; ?></option>
                   <option value="free"><?php echo Language::$word->NL_UAREG; ?></option>
@@ -45,8 +44,7 @@
             <label><?php echo Language::$word->NL_SUBJECT; ?>
                <i class="icon asterisk"></i>
             </label>
-            <input type="text" placeholder="<?php echo Language::$word->NL_SUBJECT; ?>"
-                   value="<?php echo $this->data->subject; ?>" name="subject">
+            <input type="text" placeholder="<?php echo Language::$word->NL_SUBJECT; ?>" value="<?php echo $this->data->subject; ?>" name="subject">
          </div>
          <div class="field">
             <label><?php echo Language::$word->NL_ATTACH; ?></label>
@@ -59,12 +57,12 @@
             <textarea name="body" class="bodypost"><?php echo str_replace(array('[SITEURL]', '[LOGO]'), array(SITEURL, $this->core->plogo), $this->data->body); ?></textarea>
             <p class="wojo small icon negative text">
                <i class="icon negative info sign"></i>
-               <?php echo Language::$word->NOTEVAR; ?></p>
+               <?php echo Language::$word->NOTEVAR; ?>
+            </p>
          </div>
       </div>
    </div>
    <div class="center-align margin-top">
-      <button type="button" data-action="processMailer" name="dosubmit"
-              class="wojo primary button"><?php echo Language::$word->NL_SEND; ?></button>
+      <button type="button" data-action="processMailer" name="dosubmit" class="wojo primary button"><?php echo Language::$word->NL_SEND; ?></button>
    </div>
 </form>

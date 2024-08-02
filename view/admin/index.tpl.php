@@ -1,16 +1,17 @@
 <?php
-   /**
-    * index
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: index.tpl.php, v1.00 7/1/2023 10:32 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * index
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: index.tpl.php, v1.00 7/1/2023 10:32 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <div class="row gutters">
    <div class="columns screen-25 tablet-50 mobile-50 phone-100">
@@ -42,7 +43,7 @@
       </a>
    </div>
 </div>
-<?php if (Auth::checkAcl('owner')): ?>
+<?php if (Auth::checkAcl('owner')) : ?>
    <h5><?php echo Language::$word->AD_TYEAR; ?></h5>
    <div class="row gutters align-bottom">
       <div class="columns screen-80 tablet-70 mobile-100">
@@ -78,9 +79,9 @@
    <script src="<?php echo ADMINVIEW; ?>/js/index.js"></script>
    <script type="text/javascript">
       // <![CDATA[
-      $(document).ready(function () {
+      $(document).ready(function() {
          $.Index({
-            url: "<?php echo ADMINVIEW;?>",
+            url: "<?php echo ADMINVIEW; ?>",
          });
       });
       // ]]>

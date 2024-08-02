@@ -1,23 +1,24 @@
 <?php
-   /**
-    * index
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: index.tpl.php, v1.00 7/12/2023 10:30 AM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * index
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: index.tpl.php, v1.00 7/12/2023 10:30 AM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <main>
    <div class="wojo-grid">
       <div class="row justify-center height-full align-middle">
          <div class="columns screen-40 tablet-50 mobile-100 phone-100">
             <div class="logo">
-               <a href="<?php echo SITEURL; ?>/"><?php echo ($this->core->logo)? '<img src="' . SITEURL . '/uploads/' . $this->core->logo . '" alt="' . $this->core->company . '">' : $this->core->company; ?></a>
+               <a href="<?php echo SITEURL; ?>/"><?php echo ($this->core->logo) ? '<img src="' . SITEURL . '/uploads/' . $this->core->logo . '" alt="' . $this->core->company . '">' : $this->core->company; ?></a>
             </div>
             <div class="wojo segment">
                <div class="center-align margin-bottom">
@@ -52,7 +53,7 @@
                         <div class="field">
                            <button id="doSubmit" type="button" class="wojo primary fluid button" name="submit"><?php echo Language::$word->LOGIN; ?></button>
                         </div>
-                        <?php if (App::Core()->reg_allowed): ?>
+                        <?php if (App::Core()->reg_allowed) : ?>
                            <div class="field basic">
                               <?php echo Language::$word->M_SUB27; ?>
                               <a href="<?php echo Url::url('/register'); ?>">

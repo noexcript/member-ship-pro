@@ -1,18 +1,19 @@
 <?php
-   /**
-    * transaction
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: transaction.tpl.php, v1.00 7/10/2023 9:05 AM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
-   
-   App::Auth()->checkOwner();
+
+/**
+ * transaction
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: transaction.tpl.php, v1.00 7/10/2023 9:05 AM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
+
+App::Auth()->checkOwner();
 ?>
 <div class="wojo top attached card" id="pData">
    <div class="content">
@@ -66,30 +67,31 @@
       </div>
    </form>
 </div>
-<?php if (!$this->data): ?>
+<?php if (!$this->data) : ?>
    <div class="center-align">
       <img src="<?php echo ADMINVIEW; ?>/images/empty.svg" alt="" class="wojo big inline image">
       <div class="margin-small-top">
          <p class="wojo small icon alert inverted attached compact message">
-            <i class="icon exclamation triangle"></i><?php echo Language::$word->SYSTEM_ERR3; ?></p>
+            <i class="icon exclamation triangle"></i><?php echo Language::$word->SYSTEM_ERR3; ?>
+         </p>
       </div>
    </div>
-<?php else: ?>
+<?php else : ?>
    <div class="wojo simple segment margin-bottom">
       <table class="wojo basic responsive table">
          <thead>
-         <tr>
-            <th class="disabled center-align">
-               <i class="icon disabled id"></i>
-            </th>
-            <th><?php echo Language::$word->ITEM; ?></th>
-            <th><?php echo Language::$word->USER; ?></th>
-            <th><?php echo Language::$word->TRX_PP; ?></th>
-            <th><?php echo Language::$word->TRX_TOTAMT; ?></th>
-            <th><?php echo Language::$word->CREATED; ?></th>
-         </tr>
+            <tr>
+               <th class="disabled center-align">
+                  <i class="icon disabled id"></i>
+               </th>
+               <th><?php echo Language::$word->ITEM; ?></th>
+               <th><?php echo Language::$word->USER; ?></th>
+               <th><?php echo Language::$word->TRX_PP; ?></th>
+               <th><?php echo Language::$word->TRX_TOTAMT; ?></th>
+               <th><?php echo Language::$word->CREATED; ?></th>
+            </tr>
          </thead>
-         <?php foreach ($this->data as $row): ?>
+         <?php foreach ($this->data as $row) : ?>
             <tr id="item_<?php echo $row->id; ?>">
                <td class="auto">
                   <span class="wojo small dark inverted label"><?php echo $row->id; ?></span>
@@ -118,21 +120,21 @@
 <script type="text/javascript" src="<?php echo SITEURL; ?>/assets/raphael.min.js"></script>
 <script type="text/javascript">
    // <![CDATA[
-   $(document).ready(function () {
+   $(document).ready(function() {
       function getStats(range) {
          $("#pData").addClass('loading');
          $("#payment_chart").empty();
          $.ajax({
             type: 'GET',
-            url: "<?php echo ADMINVIEW . '/helper.php';?>",
+            url: "<?php echo ADMINVIEW . '/helper.php'; ?>",
             data: {
                action: "getSalesChart",
                timerange: range
             },
             dataType: 'json'
-         }).done(function (json) {
+         }).done(function(json) {
             let legend = '';
-            json.legend.map(function (val) {
+            json.legend.map(function(val) {
                legend += val;
             });
             $("#legend").html(legend);
@@ -153,7 +155,7 @@
                fillOpacity: '.1',
                hideHover: 'auto',
                preUnits: json.preUnits,
-               hoverCallback: function (index, json, content) {
+               hoverCallback: function(index, json, content) {
                   let text = $(content)[1].textContent;
                   return content.replace(text, text.replace(json.preUnits, ""));
                },
@@ -166,7 +168,7 @@
 
       getStats('all');
 
-      $("#dropdown-timeRange").on('click', '.item', function () {
+      $("#dropdown-timeRange").on('click', '.item', function() {
          $("#payment_chart").html('');
          getStats($(this).data('value'));
       });

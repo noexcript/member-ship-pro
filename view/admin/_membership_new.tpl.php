@@ -1,16 +1,17 @@
 <?php
-   /**
-    * _membership_new.tpl.php
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: _membership_new.tpl.php, v1.00 7/5/2023 7:36 PM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * _membership_new.tpl.php
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: _membership_new.tpl.php, v1.00 7/5/2023 7:36 PM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <form method="post" id="wojo_form" name="wojo_form">
    <div class="wojo simple segment form margin-bottom">

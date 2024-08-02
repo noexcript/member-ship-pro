@@ -1,27 +1,28 @@
 <?php
-    /**
-     * Upgrade
-     *
-     * @package Wojo Framework
-     * @author wojoscripts.com
-     * @copyright 2023
-     * @version 5.00: Upgrade.php v1.00 7/17/2023 1:34 PM Gewa Exp $
-     *
-     */
-    const _WOJO = true;
-    require_once 'init.php';
-    
-    $version = App::Core()->wojov;
-    
-    if (isset($_POST['submit'])) {
-        Database::Go()->rawQuery("
+
+/**
+ * Upgrade
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: Upgrade.php v1.00 7/17/2023 1:34 PM Gewa Exp $
+ *
+ */
+const _Devxjs = true;
+require_once 'init.php';
+
+$version = App::Core()->wojov;
+
+if (isset($_POST['submit'])) {
+   Database::Go()->rawQuery("
         ALTER TABLE `banlist`
             CHANGE `item` `item` varchar(50)  COLLATE utf8mb4_unicode_ci NOT NULL after `id` ,
             CHANGE `type` `type` enum('IP','Email')  COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'IP' after `item` ,
             CHANGE `comment` `comment` varchar(150)  COLLATE utf8mb4_unicode_ci NOT NULL after `type` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_unicode_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `cart`
             ADD COLUMN `user_id` int(11) unsigned  NOT NULL DEFAULT 0 first ,
             ADD COLUMN `membership_id` int(11) unsigned  NOT NULL DEFAULT 0 after `user_id` ,
@@ -36,36 +37,36 @@
             DROP KEY `idx_user`, ADD KEY `idx_user`(`user_id`) ,
             DROP KEY `PRIMARY`, ADD PRIMARY KEY(`user_id`) , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `countries`
             CHANGE `abbr` `abbr` varchar(2)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `name` `name` varchar(70)  COLLATE utf8mb4_general_ci NOT NULL after `abbr` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `coupons`
             CHANGE `title` `title` varchar(100)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `code` `code` varchar(30)  COLLATE utf8mb4_general_ci NOT NULL after `title` ,
             CHANGE `type` `type` enum('p','a')  COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'p' after `discount` ,
             CHANGE `membership_id` `membership_id` varchar(50)  COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' after `type` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `cronjobs`
             CHANGE `stripe_customer` `stripe_customer` varchar(60)  COLLATE utf8mb4_general_ci NOT NULL after `membership_id` ,
             CHANGE `stripe_pm` `stripe_pm` varchar(80)  COLLATE utf8mb4_general_ci NOT NULL after `stripe_customer` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `custom_fields`
             CHANGE `title` `title` varchar(60) COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `tooltip` `tooltip` varchar(100) COLLATE utf8mb4_general_ci NULL after `title` ,
             CHANGE `name` `name` varchar(20) COLLATE utf8mb4_general_ci NOT NULL after `tooltip` ,
             CHANGE `section` `section` varchar(30) COLLATE utf8mb4_general_ci NULL after `required` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `downloads`
             CHANGE `alias` `alias` varchar(60)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `name` `name` varchar(80)  COLLATE utf8mb4_general_ci NOT NULL after `alias` ,
@@ -74,8 +75,8 @@
             CHANGE `token` `token` varchar(32)  COLLATE utf8mb4_general_ci NOT NULL after `type` ,
             CHANGE `fileaccess` `fileaccess` varchar(24)  COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '0 = all' after `token` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `email_templates`
             CHANGE `name` `name` varchar(100)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `subject` `subject` varchar(150)  COLLATE utf8mb4_general_ci NOT NULL after `name` ,
@@ -84,8 +85,8 @@
             CHANGE `type` `type` enum('news','mailer')  COLLATE utf8mb4_general_ci NULL DEFAULT 'mailer' after `body` ,
             CHANGE `typeid` `typeid` varchar(30)  COLLATE utf8mb4_general_ci NULL after `type` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `gateways`
             CHANGE `name` `name` varchar(30)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `displayname` `displayname` varchar(50)  COLLATE utf8mb4_general_ci NOT NULL after `name` ,
@@ -97,13 +98,13 @@
             CHANGE `extra2` `extra2` varchar(120)  COLLATE utf8mb4_general_ci NULL after `extra` ,
             CHANGE `extra3` `extra3` varchar(120)  COLLATE utf8mb4_general_ci NULL after `extra2` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         INSERT INTO `gateways` (`name`, `displayname`, `dir`, `live`, `extra_txt`, `extra_txt2`, `extra_txt3`, `extra`, `extra2`, `extra3`, `is_recurring`, `active`) VALUES
             ('paystack', 'Paystack', 'paystack', 1, 'Secret Key', 'Currency Code', 'Public Key', 'sk_test_', 'ZAR', 'pk_test_', 0, 1)
         ")->run();
 
-        Database::Go()->rawQuery("
+   Database::Go()->rawQuery("
         ALTER TABLE `memberships`
             CHANGE `title` `title` varchar(50)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `description` `description` varchar(200)  COLLATE utf8mb4_general_ci NULL after `title` ,
@@ -114,15 +115,15 @@
             ADD COLUMN `sorting` smallint(1) unsigned   NOT NULL DEFAULT 0 after `created` ,
             CHANGE `active` `active` tinyint(1) unsigned   NOT NULL DEFAULT 1 after `sorting` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `news`
             CHANGE `title` `title` varchar(80)  COLLATE utf8mb4_bin NOT NULL after `id` ,
             CHANGE `body` `body` text  COLLATE utf8mb4_bin NOT NULL after `title` ,
             CHANGE `author` `author` varchar(55)  COLLATE utf8mb4_bin NOT NULL after `body` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `pages`
             CHANGE `title` `title` varchar(200)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `slug` `slug` varchar(200)  COLLATE utf8mb4_general_ci NOT NULL after `title` ,
@@ -135,15 +136,15 @@
             ADD COLUMN `sorting` tinyint(1) unsigned   NOT NULL DEFAULT 0 after `is_hide` ,
             CHANGE `active` `active` tinyint(1)   NOT NULL DEFAULT 0 after `sorting` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `payments`
             CHANGE `txn_id` `txn_id` varchar(50)  COLLATE utf8mb4_general_ci NULL after `id` ,
             CHANGE `currency` `currency` varchar(4)  COLLATE utf8mb4_general_ci NULL after `total` ,
             CHANGE `pp` `pp` varchar(20)  COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Stripe' after `currency` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `privileges`
             CHANGE `code` `code` varchar(20)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `name` `name` varchar(30)  COLLATE utf8mb4_general_ci NOT NULL after `code` ,
@@ -151,18 +152,18 @@
             CHANGE `mode` `mode` varchar(8)  COLLATE utf8mb4_general_ci NOT NULL after `description` ,
             CHANGE `type` `type` varchar(40)  COLLATE utf8mb4_general_ci NULL after `mode` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("ALTER TABLE `role_privileges` DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("ALTER TABLE `role_privileges` DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'")->run();
+
+   Database::Go()->rawQuery("
         ALTER TABLE `roles`
             CHANGE `code` `code` varchar(10)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `icon` `icon` varchar(20)  COLLATE utf8mb4_general_ci NULL after `code` ,
             CHANGE `name` `name` varchar(30)  COLLATE utf8mb4_general_ci NOT NULL after `icon` ,
             CHANGE `description` `description` varchar(200)  COLLATE utf8mb4_general_ci NOT NULL after `name` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `settings`
             CHANGE `company` `company` varchar(50)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `site_email` `site_email` varchar(80)  COLLATE utf8mb4_general_ci NOT NULL after `company` ,
@@ -195,20 +196,20 @@
             CHANGE `smtp_port` `smtp_port` varchar(6)  COLLATE utf8mb4_general_ci NULL after `smtp_pass` ,
             CHANGE `sendmail` `sendmail` varchar(150)  COLLATE utf8mb4_general_ci NULL after `is_ssl` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `trash`
             CHANGE `parent` `parent` varchar(15)  COLLATE utf8mb4_general_ci NULL after `id` ,
             CHANGE `type` `type` varchar(15)  COLLATE utf8mb4_general_ci NULL after `parent_id` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `user_custom_fields`
             CHANGE `field_name` `field_name` varchar(40)  COLLATE utf8mb4_general_ci NULL after `field_id` ,
             CHANGE `field_value` `field_value` varchar(100)  COLLATE utf8mb4_general_ci NULL after `field_name` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `user_memberships`
             ADD COLUMN `transaction_id` int(11) unsigned   NOT NULL DEFAULT 0 after `id` ,
             ADD COLUMN `user_id` int(11) unsigned   NOT NULL DEFAULT 0 after `transaction_id` ,
@@ -218,8 +219,8 @@
             DROP COLUMN `uid` ,
             DROP COLUMN `mid` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->rawQuery("
+
+   Database::Go()->rawQuery("
         ALTER TABLE `users`
             CHANGE `username` `username` varchar(50)  COLLATE utf8mb4_general_ci NOT NULL after `id` ,
             CHANGE `fname` `fname` varchar(60)  COLLATE utf8mb4_general_ci NULL after `username` ,
@@ -247,14 +248,15 @@
             CHANGE `active` `active` enum('y','n','t','b')  COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'n' after `custom_fields` ,
             DROP COLUMN `salt` , DEFAULT CHARSET='utf8mb4', COLLATE ='utf8mb4_general_ci'
         ")->run();
-        
-        Database::Go()->update(Core::sTable, array('wojov' => '5.01', 'page_slugs' => '{"home":[{"page_type":"home"}],"contact":[{"page_type":"contact"}],"privacy":[{"page_type":"privacy"}]}'))->where('id', 1, '=')->run();
-        
-        Url::redirect(SITEURL . '/upgrade.php?update=done');
-    }
+
+   Database::Go()->update(Core::sTable, array('wojov' => '5.01', 'page_slugs' => '{"home":[{"page_type":"home"}],"contact":[{"page_type":"contact"}],"privacy":[{"page_type":"privacy"}]}'))->where('id', 1, '=')->run();
+
+   Url::redirect(SITEURL . '/upgrade.php?update=done');
+}
 ?>
 <!doctype html>
 <html lang="en">
+
 <head>
    <meta charset="utf-8">
    <title>MMP Upgrade</title>
@@ -269,6 +271,7 @@
          margin: 0;
          padding: 0
       }
+
       #wrap {
          width: 800px;
          margin-top: 150px;
@@ -279,16 +282,19 @@
          border: 2px solid #111;
          border-radius: 3px
       }
+
       header {
          background-color: #145983;
          font-size: 26px;
          font-weight: 200;
          padding: 35px
       }
+
       .line {
          height: 2px;
          background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 47%, rgba(255, 255, 255, 0) 100%)
       }
+
       .line2 {
          position: absolute;
          left: 200px;
@@ -297,10 +303,12 @@
          background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 47%, rgba(255, 255, 255, 0) 100%);
          display: block
       }
+
       #content {
          position: relative;
          padding: 45px 20px
       }
+
       #content .left {
          float: left;
          width: 200px;
@@ -309,21 +317,25 @@
          background-repeat: no-repeat;
          background-position: 10px center
       }
+
       #content .right {
          margin-left: 200px
       }
+
       h4 {
          font-size: 18px;
          font-weight: 300;
          margin: 0 0 40px;
          padding: 0
       }
+
       p.info {
          background-color: #383838;
          border-radius: 3px;
          box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
          padding: 10px
       }
+
       p.info span {
          display: block;
          float: left;
@@ -335,16 +347,19 @@
          margin-right: 5px;
          border-right: 1px solid rgba(255, 255, 255, 0.05)
       }
+
       footer {
          background-color: #383838;
          padding: 20px
       }
+
       form {
          display: inline-block;
          float: right;
          margin: 0;
          padding: 0
       }
+
       .button {
          border: 2px solid #222;
          font-family: Raleway, Arial, Helvetica, sans-serif;
@@ -362,6 +377,7 @@
          margin: 0;
          padding: 5px 20px
       }
+
       .button:hover {
          background-color: #222;
          -webkit-transition: all .55s ease;
@@ -370,12 +386,14 @@
          transition: all .55s ease;
          outline: none
       }
+
       .clear {
          font-size: 0;
          line-height: 0;
          clear: both;
          height: 0
       }
+
       .clearfix:after {
          content: ".";
          display: block;
@@ -383,48 +401,51 @@
          clear: both;
          visibility: hidden;
       }
+
       a {
          text-decoration: none;
          float: right
       }
    </style>
 </head>
+
 <body>
-<div id="wrap">
-   <header>Welcome to MMP pro Upgrade Wizard</header>
-   <div class="line"></div>
-   <div id="content">
-      <div class="left">
-         <div class="line2"></div>
+   <div id="wrap">
+      <header>Welcome to MMP pro Upgrade Wizard</header>
+      <div class="line"></div>
+      <div id="content">
+         <div class="left">
+            <div class="line2"></div>
+         </div>
+         <div class="right">
+            <h4>MMP Upgrade v5.00</h4>
+            <?php if (Validator::compareNumbers($version, 4.61, '!=')) : ?>
+               <p class="info"><span>Warning!</span>You need at least MMP v4.61 in order to continue.</p>
+            <?php else : ?>
+               <?php if (isset($_GET['update']) && $_GET['update'] == 'done') : ?>
+                  <p class="info"><span>Success!</span>Installation Completed. Please delete upgrade.php</p>
+               <?php else : ?>
+                  <p class="info"><span>Warning!</span>Please make sure you have performed full backup, including database!!!</p>
+                  <p style="margin-top:60px">When ready click Install button.</p>
+                  <p><span>Please be patient, and<strong> DO NOT</strong> Refresh your browser.<br>
+                        This process might take a while</span>.</p>
+               <?php endif; ?>
+            <?php endif; ?>
+         </div>
       </div>
-      <div class="right">
-         <h4>MMP Upgrade v5.00</h4>
-          <?php if (Validator::compareNumbers($version, 4.61, '!=')): ?>
-             <p class="info"><span>Warning!</span>You need at least MMP v4.61 in order to continue.</p>
-          <?php else: ?>
-              <?php if (isset($_GET['update']) && $_GET['update'] == 'done'): ?>
-                <p class="info"><span>Success!</span>Installation Completed. Please delete upgrade.php</p>
-              <?php else: ?>
-                <p class="info"><span>Warning!</span>Please make sure you have performed full backup, including database!!!</p>
-                <p style="margin-top:60px">When ready click Install button.</p>
-                <p><span>Please be patient, and<strong> DO NOT</strong> Refresh your browser.<br>
-        This process might take a while</span>.</p>
-              <?php endif; ?>
-          <?php endif; ?>
-      </div>
+      <div class="clear"></div>
+      <footer class="clearfix"><small>current <b>mmp v.<?php echo $version; ?></b></small>
+         <?php if (isset($_GET['update']) && $_GET['update'] == 'done') : ?>
+            <a href="admin/" class="button">Back to admin panel</a>
+         <?php else : ?>
+            <form method="post" name="upgrade_form">
+               <?php if (Validator::compareNumbers($version, 4.61)) : ?>
+                  <input name="submit" type="submit" class="button" value="Upgrade MMP" id="submit" />
+               <?php endif; ?>
+            </form>
+         <?php endif; ?>
+      </footer>
    </div>
-   <div class="clear"></div>
-   <footer class="clearfix"><small>current <b>mmp v.<?php echo $version; ?></b></small>
-       <?php if (isset($_GET['update']) && $_GET['update'] == 'done'): ?>
-          <a href="admin/" class="button">Back to admin panel</a>
-       <?php else: ?>
-          <form method="post" name="upgrade_form">
-              <?php if (Validator::compareNumbers($version, 4.61)): ?>
-                 <input name="submit" type="submit" class="button" value="Upgrade MMP" id="submit"/>
-              <?php endif; ?>
-          </form>
-       <?php endif; ?>
-   </footer>
-</div>
 </body>
+
 </html>

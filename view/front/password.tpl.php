@@ -1,23 +1,24 @@
 <?php
-   /**
-    * password
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: password.tpl.php, v1.00 7/17/2023 10:08 AM Gewa Exp $
-    *
-    */
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+
+/**
+ * password
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: password.tpl.php, v1.00 7/17/2023 10:08 AM Gewa Exp $
+ *
+ */
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
 ?>
 <main>
    <div class="wojo-grid">
       <div class="row justify-center height-full align-middle">
          <div class="columns screen-40 tablet-50 mobile-100 phone-100">
             <div class="logo">
-               <a href="<?php echo SITEURL; ?>/"><?php echo ($this->core->logo)? '<img src="' . SITEURL . '/uploads/' . $this->core->logo . '" alt="' . $this->core->company . '">' : $this->core->company; ?></a>
+               <a href="<?php echo SITEURL; ?>/"><?php echo ($this->core->logo) ? '<img src="' . SITEURL . '/uploads/' . $this->core->logo . '" alt="' . $this->core->company . '">' : $this->core->company; ?></a>
             </div>
             <div class="wojo segment">
                <div class="center-align margin-bottom">

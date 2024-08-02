@@ -1,29 +1,30 @@
 <?php
-   /**
-    * form
-    *
-    * @package Wojo Framework
-    * @author wojoscripts.com
-    * @copyright 2023
-    * @version 5.00: form.tpl.php, v1.00 7/18/2023 8:38 AM Gewa Exp $
-    *
-    */
 
-   use Stripe\PaymentIntent;
-   use Stripe\Stripe;
+/**
+ * form
+ *
+ * @package Wojo Framework
+ * @author wojoscripts.com
+ * @copyright 2023
+ * @version 5.00: form.tpl.php, v1.00 7/18/2023 8:38 AM Gewa Exp $
+ *
+ */
 
-   if (!defined('_WOJO')) {
-      die('Direct access to this location is not allowed.');
-   }
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
-   include BASEPATH . 'gateways/stripe/vendor/autoload.php';
-   Stripe::setApiKey($this->gateway->extra);
-   $intent = PaymentIntent::create([
-     'amount' => round($this->cart->totalprice * 100),
-     'currency' => $this->gateway->extra2,
-     'payment_method_types' => ['card'],
-     'setup_future_usage' => 'off_session',
-   ]);
+if (!defined('_Devxjs')) {
+   die('Direct access to this location is not allowed.');
+}
+
+include BASEPATH . 'gateways/stripe/vendor/autoload.php';
+Stripe::setApiKey($this->gateway->extra);
+$intent = PaymentIntent::create([
+   'amount' => round($this->cart->totalprice * 100),
+   'currency' => $this->gateway->extra2,
+   'payment_method_types' => ['card'],
+   'setup_future_usage' => 'off_session',
+]);
 ?>
 <div class="wojo small segment form" id="stripe_form">
    <div class="form-row">
@@ -40,7 +41,7 @@
 <div role="alert" id="smsgholder" class="text-color-negative"></div>
 <script type="text/javascript">
    // <![CDATA[
-   var stripe = Stripe('<?php echo $this->gateway->extra3;?>');
+   var stripe = Stripe('<?php echo $this->gateway->extra3; ?>');
    var elements = stripe.elements();
 
    var style = {
@@ -65,7 +66,7 @@
 
    card.mount('#card-element');
 
-   card.addEventListener('change', function (event) {
+   card.addEventListener('change', function(event) {
       var displayError = document.getElementById('smsgholder');
       if (event.error) {
          displayError.textContent = event.error.message;
@@ -77,14 +78,14 @@
    var submitButton = document.getElementById('dostripe');
    var clientSecret = submitButton.dataset.secret;
 
-   submitButton.addEventListener('click', function () {
+   submitButton.addEventListener('click', function() {
       $('#stripe_form').addClass('loading');
       stripe.confirmCardPayment(clientSecret, {
          payment_method: {
             card: card
          },
          setup_future_usage: 'off_session'
-      }).then(function (result) {
+      }).then(function(result) {
          if (result.error) {
             $('#smsgholder').html(result.error.message);
             $('#stripe_form').removeClass('loading');
@@ -93,18 +94,18 @@
                $.ajax({
                   type: 'post',
                   dataType: 'json',
-                  url: '<?php echo SITEURL;?>/gateways/stripe/ipn.php',
+                  url: '<?php echo SITEURL; ?>/gateways/stripe/ipn.php',
                   data: {
                      processStripePayment: 1,
                      payment_method: result.paymentIntent.payment_method
                   },
-                  success: function (json) {
+                  success: function(json) {
                      $('#stripe_form').removeClass('loading');
                      if (json.type === 'success') {
                         $('main').transition('scaleOut', {
                            duration: 4000,
-                           complete: function () {
-                              window.location.href = '<?php echo Url::url('/dashboard', 'history');?>';
+                           complete: function() {
+                              window.location.href = '<?php echo Url::url('/dashboard', 'history'); ?>';
                            }
                         });
                      }
