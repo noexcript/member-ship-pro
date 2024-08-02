@@ -828,9 +828,13 @@ class File
      */
     public static function process(array $result, string $dir, string $prefix = 'SOURCE_', string|bool $filename = false, bool $replace = true)
     {
+
         if (!is_dir($dir)) {
             Message::$msgs['dir'] = Language::$word->FU_ERROR12; //Directory doesn't exist!
+        } else {
+            mkdir($dir, 0777, true);
         }
+
 
         if (!$filename) {
             $fileInfo['fname'] = $prefix . Utility::randomString(12) . '.' . $result['ext'];

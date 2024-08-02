@@ -814,14 +814,18 @@ class Front
             $validate = Validator::run($_POST);
             $validate
                 ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
-                // ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
-                ->set('email', Language::$word->M_EMAIL)->required()->email();
-        // ->set('newsletter', 'Instagram')->numeric();
+                ->set('address', Language::$word->M_ADDRESS)->required()->string()->min_len(3)->max_len(80)
+                ->set('city', Language::$word->M_CITY)->required()->string()->min_len(2)->max_len(60)
+                ->set('state', Language::$word->M_COUNTRY)->required()->string()->max_len(60)
+                ->set('email', Language::$word->M_EMAIL)->required()->email()
+                ->set('user_id', Language::$word->ID_USER)->required()->string();
         else :
             $validate = Validator::run($data);
             $validate
                 ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
-                // ->set('lname', Language::$word->M_LNAME)->required()->string()->min_len(2)->max_len(60)
+                ->set('address', Language::$word->M_ADDRESS)->required()->string()->min_len(3)->max_len(80)
+                ->set('city', Language::$word->M_CITY)->required()->string()->min_len(2)->max_len(60)
+                ->set('state', Language::$word->M_COUNTRY)->required()->string()->max_len(60)
                 ->set('email', Language::$word->M_EMAIL)->required()->email()
                 ->set('user_id', Language::$word->ID_USER)->required()->string();
         endif;
@@ -836,21 +840,47 @@ class Front
         // }
 
         $thumb = File::upload('avatar', 512000, 'png,jpg,jpeg');
+        $card_id = File::upload('user_files', 1024000, 'png,jpg,jpeg,pdf');
+
 
         // print_r($data);
         // print_r($thumb);
         // exit;
-
-
-
         Content::verifyCustomFields();
         $safe = $validate->safe();
+
+
+
+        // if (strlen($safe->email)) {
+        //     if (Auth::emailExists($safe->email)) {
+        //         Message::$msgs['email'] = Language::$word->M_EMAIL_R2;
+        //         if ($data != null) {
+        //             http_response_code(400);
+        //             Message::msgSingleStatus($data);
+        //             return;
+        //         }
+        //     }
+        // }
+        // if (strlen($safe->username)) {
+        //     if (Auth::usernameExists($safe->username)) {
+        //         Message::$msgs['username'] = Language::$word->M_USERNAME_R2;
+
+        //         if ($data != null) {
+        //             http_response_code(400);
+        //             Message::msgSingleStatus($data);
+        //             return;
+        //         }
+        //     }
+        // }
 
         if (count(Message::$msgs) === 0) {
             $data = array(
                 'email' => $safe->email,
-                'lname' => $safe->lname,
                 'fname' => $safe->fname,
+                'user_id' => $safe->user_id,
+                'address' => $safe->address,
+                'city' => $safe->city,
+                'state' => $safe->state
                 // 'newsletter' => (strlen($safe->newsletter) ? 1 : 0)
             );
 
@@ -872,19 +902,44 @@ class Front
             endif;
 
             if (array_key_exists('avatar', $_FILES)) {
+
                 $thumbPath = UPLOADS . '/avatars/';
-                if (Auth::$udata->avatar != '') {
+                if (!$api && Auth::$udata->avatar != '') {
                     File::deleteFile(UPLOADS . '/avatars/' . Auth::$udata->avatar);
                 }
                 $result = File::process($thumb, $thumbPath, 'AVT_');
-                App::Auth()->avatar = Session::set('avatar', $result['fname']);
+                if (!$api) :
+                    App::Auth()->avatar = Session::set('avatar', $result['fname']);
+                endif;
                 $data['avatar'] = $result['fname'];
             }
 
-            Database::Go()->update(User::mTable, $data)->where('id', App::Auth()->uid, '=')->run();
 
+            if (array_key_exists('user_files', $_FILES)) {
+                
+                $cardPath = UPLOADS . '/bi/';
+                if (!$api && Auth::$udata->card_bi != '') {
+                    
+                    File::deleteFile(UPLOADS . '/bi/' . Auth::$udata->avatar);
+                }
+              
+                $result = File::process($card_id, $cardPath, 'CARD_');
+                if (!$api) :
+                    App::Auth()->card_bi = Session::set('card_bi', $result['fname']);
+                endif;
+                $data['user_files'] = $result['fname'];
+            }
+
+            if (!$api) :
+                unset($data['user_id']);
+                Database::Go()->update(User::mTable, $data)->where('id', App::Auth()->uid, '=')->run();
+            else :
+                $user_id = $data['user_id'];
+                unset($data['user_id']);
+                Database::Go()->update(User::mTable, $data)->where('id', $user_id, '=')->run();
+            endif;
             //Start Custom Fields
-            $fl_array = Utility::array_key_exists_wildcard($_POST, 'custom_*', 'key-value');
+            $fl_array = $api ?? Utility::array_key_exists_wildcard($_POST, 'custom_*', 'key-value');
             if ($fl_array) {
                 foreach ($fl_array as $key => $val) {
                     $cfdata['field_value'] = Validator::sanitize($val);
@@ -902,12 +957,164 @@ class Front
                     Auth::$udata->country = Session::set('country', $data['country']);
                 }
             }
-
-
         } else {
             Message::msgSingleStatus();
         }
     }
+
+    public function createMember($data = null): void
+    {
+        $api = $data ? true : false;
+        $core = App::Core();
+        if (!$api) :
+            $validate = Validator::run($_POST);
+            $validate
+                ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
+                ->set('address', Language::$word->M_ADDRESS)->required()->string()->min_len(3)->max_len(80)
+                ->set('city', Language::$word->M_CITY)->required()->string()->min_len(2)->max_len(60)
+                ->set('state', Language::$word->M_COUNTRY)->required()->string()->max_len(60)
+                ->set('user_id', Language::$word->ID_USER)->required()->string();
+        else :
+            $validate = Validator::run($data);
+            $validate
+                ->set('fname', Language::$word->M_FNAME)->required()->string()->min_len(2)->max_len(60)
+                ->set('address', Language::$word->M_ADDRESS)->required()->string()->min_len(3)->max_len(80)
+                ->set('city', Language::$word->M_CITY)->required()->string()->min_len(2)->max_len(60)
+                ->set('state', Language::$word->M_COUNTRY)->required()->string()->max_len(60)
+                 ->set('user_id', Language::$word->ID_USER)->required()->string();
+        endif;
+
+        // if ($core->enable_tax) {
+        //     $validate
+        //         ->set('address', Language::$word->M_ADDRESS)->required()->string()->min_len(3)->max_len(80)
+        //         ->set('city', Language::$word->M_CITY)->required()->string()->min_len(2)->max_len(60)
+        //         ->set('zip', Language::$word->M_ZIP)->required()->string()->min_len(3)->max_len(30)
+        //         ->set('state', Language::$word->M_STATE)->required()->string()->min_len(2)->max_len(60)
+        //         ->set('country', Language::$word->M_COUNTRY)->required()->string()->exact_len(2);
+        // }
+
+        $thumb = File::upload('avatar', 512000, 'png,jpg,jpeg');
+        $card_id = File::upload('user_files', 1024000, 'png,jpg,jpeg,pdf');
+
+
+        // print_r($data);
+        // print_r($thumb);
+        // exit;
+        Content::verifyCustomFields();
+        $safe = $validate->safe();
+
+
+
+        // if (strlen($safe->email)) {
+        //     if (Auth::emailExists($safe->email)) {
+        //         Message::$msgs['email'] = Language::$word->M_EMAIL_R2;
+        //         if ($data != null) {
+        //             http_response_code(400);
+        //             Message::msgSingleStatus($data);
+        //             return;
+        //         }
+        //     }
+        // }
+        // if (strlen($safe->username)) {
+        //     if (Auth::usernameExists($safe->username)) {
+        //         Message::$msgs['username'] = Language::$word->M_USERNAME_R2;
+
+        //         if ($data != null) {
+        //             http_response_code(400);
+        //             Message::msgSingleStatus($data);
+        //             return;
+        //         }
+        //     }
+        // }
+
+        if (count(Message::$msgs) === 0) {
+            $data = array(
+                'fname' => $safe->fname,
+                'user_id' => $safe->user_id,
+                'address' => $safe->address,
+                'city' => $safe->city,
+                'state' => $safe->state
+                // 'newsletter' => (strlen($safe->newsletter) ? 1 : 0)
+            );
+
+            // if ($core->enable_tax) {
+            //     $data['address'] = $safe->address;
+            //     $data['city'] = $safe->city;
+            //     $data['zip'] = $safe->zip;
+            //     $data['state'] = $safe->state;
+            //     $data['country'] = $safe->country;
+            // }
+            if ($api) :
+                if (strlen($data['password'])) :
+                    $data['hash'] = Auth::doHash($data['password']);
+                endif;
+            else :
+                if (strlen($_POST['password'])) :
+                    $data['hash'] = Auth::doHash($_POST['password']);
+                endif;
+            endif;
+
+            if (array_key_exists('avatar', $_FILES)) {
+
+                $thumbPath = UPLOADS . '/avatars/';
+                if (!$api && Auth::$udata->avatar != '') {
+                    File::deleteFile(UPLOADS . '/avatars/' . Auth::$udata->avatar);
+                }
+                $result = File::process($thumb, $thumbPath, 'AVT_');
+                if (!$api) :
+                    App::Auth()->avatar = Session::set('avatar', $result['fname']);
+                endif;
+                $data['avatar'] = $result['fname'];
+            }
+
+
+            if (array_key_exists('user_files', $_FILES)) {
+                
+                $cardPath = UPLOADS . '/bi/';
+                if (!$api && Auth::$udata->card_bi != '') {
+                    
+                    File::deleteFile(UPLOADS . '/bi/' . Auth::$udata->avatar);
+                }
+              
+                $result = File::process($card_id, $cardPath, 'CARD_');
+                if (!$api) :
+                    App::Auth()->card_bi = Session::set('card_bi', $result['fname']);
+                endif;
+                $data['user_files'] = $result['fname'];
+            }
+
+            if (!$api) :
+                unset($data['user_id']);
+                Database::Go()->update(User::mTable, $data)->where('id', App::Auth()->uid, '=')->run();
+            else :
+                $user_id = $data['user_id'];
+                unset($data['user_id']);
+                Database::Go()->update(User::mTable, $data)->where('id', $user_id, '=')->run();
+            endif;
+            //Start Custom Fields
+            $fl_array = $api ?? Utility::array_key_exists_wildcard($_POST, 'custom_*', 'key-value');
+            if ($fl_array) {
+                foreach ($fl_array as $key => $val) {
+                    $cfdata['field_value'] = Validator::sanitize($val);
+                    Database::Go()->update(User::cfTable, $cfdata)->where('user_id', App::Auth()->uid, '=')->where('field_name', str_replace('custom_', '', $key), '=')->run();
+                }
+            }
+
+            Message::msgReply(true, 'success', str_replace('[NAME]', '', Language::$word->M_CREATED));
+            if (Database::Go()->affected()) {
+                Auth::$udata->email = Session::set('email', $data['email']);
+                Auth::$udata->fname = Session::set('fname', $data['fname']);
+                Auth::$udata->lname = Session::set('lname', $data['lname']);
+                Auth::$udata->name = Session::set('name', $data['fname'] . ' ' . $data['lname']);
+                if ($core->enable_tax) {
+                    Auth::$udata->country = Session::set('country', $data['country']);
+                }
+            }
+        } else {
+            Message::msgSingleStatus();
+        }
+    }
+
 
     /**
      * buyMembership

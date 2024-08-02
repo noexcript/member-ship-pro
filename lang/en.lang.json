@@ -173,7 +173,7 @@
             "PROP": "Propriedades",
             "PUBLIC": "Público",
             "PUBLISHED": "Publicado",
-            "REFRESH": "Atualizar",
+            "REFRESH": "Actualizar",
             "REGISTERED": "Registrado",
             "REMOVE": "Remover",
             "RENAME": "Renomear",
@@ -212,7 +212,7 @@
             "TRASH_DEL_OK": "Todos os itens na lixeira excluídos com sucesso!",
             "TYPE": "Tipo",
             "UNASSIGNED": "Não Atribuído",
-            "UPDATE": "Atualizar",
+            "UPDATE": "Actualizar",
             "UPDATED": "atualizado com sucesso!",
             "UPLOAD": "Enviar",
             "USER": "Usuário",
@@ -316,9 +316,10 @@
     "Accounts": 
     {
         "M_ADDED": "Conta [NAME] criada com sucesso.",
-        "M_ADDRESS": "Endereço",
-        "M_CITY": "Cidade",
-        "M_COUNTRY": "País",
+        "M_ADDRESS": "Contacto",
+        "M_CITY": "Morada",
+        "M_CARD_ID": "Bilhete de entidade",
+        "M_COUNTRY": "Naturidade",
         "M_DELETE_OK": "Usuário [NAME] excluído com sucesso.",
         "M_EMAIL": "Endereço de E-mail",
         "M_EMAIL1": "E-mail",
@@ -339,7 +340,7 @@
         "M_INFO10": "E-mail e/ou token inválido detectado.",
         "M_INFO11": "Houve um problema ao criar sua conta. Por favor, entre em contato com o administrador do site.",
         "M_INFO12": "Você ativou com sucesso [NAME].",
-        "M_INFO2": "Descrição do papel atualizada com sucesso.",
+        "M_INFO2": "Descrição do papel actualizada com sucesso.",
         "M_INFO3": "Atualmente você não tem nenhum membro...",
         "M_INFO4": "Deseja reenviar a notificação por e-mail para [NAME]?",
         "M_INFO5": "Notificação reenviada com sucesso.",
@@ -353,9 +354,9 @@
         "M_LNAME": "Sobrenome",
         "M_MYACCOUNT": "Minha Conta",
         "M_PASSMATCH": "As senhas não coincidem.",
-        "M_PASSUPDATE": "Atualizar Senha",
-        "M_PASSUPD_OK": "Senha atualizada com sucesso.",
-        "M_PASSUPD_OK2": "Senha atualizada com sucesso. Você pode fazer login agora!",
+        "M_PASSUPDATE": "Actualizar Senha",
+        "M_PASSUPD_OK": "Senha actualizada com sucesso.",
+        "M_PASSUPD_OK2": "Senha actualizada com sucesso. Você pode fazer login agora!",
         "M_PASSWORD": "Senha",
         "M_PASSWORD_L": "Senha Esquecida?",
         "M_PASSWORD_R1": "Por favor, insira uma senha válida.",
@@ -369,7 +370,7 @@
         "M_PHONE": "Número de Telefone",
         "M_RESTORE_OK": "Usuário [NAME] restaurado com sucesso.",
         "M_STATE": "Província/Estado",
-        "M_SUB1": "Aqui você pode atualizar as informações da sua conta pessoal.",
+        "M_SUB1": "Aqui você pode actualizar as informações da sua conta pessoal.",
         "M_SUB10": "Assinante de Newsletter",
         "M_SUB11": "Nota do Usuário",
         "M_SUB12": "Aqui você pode adicionar uma nova conta de usuário.",
@@ -397,7 +398,7 @@
         "M_SUB4": "Aqui você pode visualizar e gerenciar os privilégios para o papel [ROLE] atualmente selecionado.",
         "M_SUB5": "Aqui você pode visualizar e gerenciar seus membros.",
         "M_SUB6": "Reenviar E-mail",
-        "M_SUB7": "Aqui você pode atualizar as informações da conta pessoal do usuário.",
+        "M_SUB7": "Aqui você pode actualizar as informações da conta pessoal do usuário.",
         "M_SUB8": "Alterar Assinatura",
         "M_SUB9": "Tipo de Usuário",
         "M_TITLE": "Visão Geral da Conta",
@@ -407,8 +408,9 @@
         "M_TITLE4": "Editar Usuário",
         "M_TITLE5": "Novo Usuário",
         "M_TRASH_OK": "Usuário [NAME] movido para a lixeira com sucesso.",
-        "M_UPDATE": "Atualizar Conta",
-        "M_UPDATED": "Conta [NAME] atualizada com sucesso.",
+        "M_UPDATE": "Actualizar Conta",
+        "M_UPDATED": "Conta [NAME] actualizada com sucesso.",
+        "M_CREATED": "Sócio criado com sucesso.",
         "M_ZIP": "Código Postal/CEP"
     }
     ,
@@ -478,7 +480,7 @@
             "GW_SUB": "Aqui você pode gerenciar sua lista de gateways disponíveis.",
             "GW_TITLE": "Gerenciar Gateways de Pagamento",
             "GW_TITLE1": "Editar Gateway de Pagamento",
-            "GW_UPDATE": "Atualizar Gateway",
+            "GW_UPDATE": "Actualizar Gateway",
             "GW_UPDATED": "Gateway [NAME] Atualizado com Sucesso"
         
         
@@ -499,11 +501,11 @@
     "ET_ERROR2": "O modelo selecionado não existe.",
     "ET_INFO": "Parece que seus modelos de e-mail estão ausentes. Por favor, reinstale.",
     "ET_NAME": "Nome do Modelo",
-    "ET_SUB": "Aqui você pode criar/atualizar modelos de e-mail existentes.",
+    "ET_SUB": "Aqui você pode criar/actualizar modelos de e-mail existentes.",
     "ET_SUBJECT": "Assunto",
     "ET_TITLE": "Gerenciar Modelos de E-mail",
     "ET_TITLE2": "Editando Modelo",
-    "ET_UPDATE": "Atualizar Modelo",
+    "ET_UPDATE": "Actualizar Modelo",
     "ET_UPDATED": "Modelo [NAME] atualizado com sucesso."
     },
     "News": {
@@ -517,8 +519,8 @@
     "NW_TITLE": "Gerenciador de Notícias",
     "NW_TITLE1": "Últimas Notícias",
     "NW_TRASH_OK": "Notícia [NAME] movida para a lixeira com sucesso.",
-    "NW_UPDATE": "Atualizar Notícia",
-    "NW_UPDATE_OK": "Notícia [NAME] atualizada com sucesso."
+    "NW_UPDATE": "Actualizar Notícia",
+    "NW_UPDATE_OK": "Notícia [NAME] actualizada com sucesso."
     },
     "Pages": {
         "PG_ADDED_OK": "Página [NAME] adicionada com sucesso.",
@@ -537,8 +539,8 @@
     "PG_SUB2": "Criar Página",
     "PG_TITLE": "Gerenciador de Páginas",
     "PG_TRASH_OK": "Página [NAME] movida para a lixeira com sucesso.",
-    "PG_UPDATE": "Atualizar Página",
-    "PG_UPDATE_OK": "Página [NAME] atualizada com sucesso."
+    "PG_UPDATE": "Actualizar Página",
+    "PG_UPDATE_OK": "Página [NAME] actualizada com sucesso."
     },
     "Transactions": {
         "TRX_AMOUNT": "Valor",
@@ -560,7 +562,7 @@
     "CNT_NOCOUNTRY": "Você ainda não tem nenhum país...",
     "CNT_SELECT": "Selecionar País",
     "CNT_TITLE": "Gerenciamento de Países",
-    "CNT_UPDATE": "Atualizar País",
+    "CNT_UPDATE": "Actualizar País",
     "CNT_UPDATED": "País [NAME] atualizado com sucesso."
     },
     "Discounts": {
@@ -573,7 +575,7 @@
     "DC_RESTORE_OK": "Cupom [NAME] restaurado com sucesso.",
     "DC_SUB": "Aqui você pode gerenciar seus descontos/cupões.",
     "DC_SUB1": "Novo Cupom",
-    "DC_SUB2": "Atualizar Cupom",
+    "DC_SUB2": "Actualizar Cupom",
     "DC_SUB3": "Aplicar a associações",
     "DC_SUB4": "Desconto",
     "DC_TITLE": "Descontos/Cupões",
@@ -586,7 +588,7 @@
     "Language Manager": {
         "LG_KEY": "Chave",
         "LG_RESET": "Redefinir Filtro de Grupo",
-        "LG_SUB2": "Aqui você pode atualizar suas frases de idioma. Nota: Não substitua variáveis entre [ ]. Clique no nome do valor para editar.",
+        "LG_SUB2": "Aqui você pode actualizar suas frases de idioma. Nota: Não substitua variáveis entre [ ]. Clique no nome do valor para editar.",
         "LG_SUB4": "Seção de Frases",
         "LG_TITLE1": "Frases de Idioma"
     },
@@ -625,14 +627,14 @@
         "CF_DEL_OK": "Campo Personalizado [NAME] excluído com sucesso.",
         "CF_EDIT": "Editar Campo",
         "CF_FIELD": "Campo",
-        "CF_INFO": "Para reordenar campos, clique e arraste a alça de reordenação do item, posicione-a onde você deseja. A posição será atualizada automaticamente.",
+        "CF_INFO": "Para reordenar campos, clique e arraste a alça de reordenação do item, posicione-a onde você deseja. A posição será actualizada automaticamente.",
         "CF_NOFIELDS": "Você ainda não tem campos personalizados. Por favor, adicione...",
         "CF_REQUIRED": "Campo Obrigatório",
         "CF_SUB1": "Editar Campo Personalizado",
         "CF_SUB2": "Adicionar Campo Personalizado",
         "CF_TIP": "Dica",
         "CF_TITLE": "Gerenciar Campos Personalizados",
-        "CF_UPDATE": "Atualizar Campo",
+        "CF_UPDATE": "Actualizar Campo",
         "CF_UPDATE_OK": "Campo Personalizado [NAME] Atualizado com Sucesso."
     },
     "Newsletter": {
@@ -762,7 +764,7 @@
     "CG_FBID": "ID do Facebook",
     "CG_EUCOOKIE": "Habilitar Aviso de Cookies da UE",
     "CG_FILEDIR": "Diretório de Arquivos",
-    "CG_INFO": "Aqui você pode atualizar a configuração do seu sistema. Por favor, não faça alterações a menos que saiba o que está fazendo.",
+    "CG_INFO": "Aqui você pode actualizar a configuração do seu sistema. Por favor, não faça alterações a menos que saiba o que está fazendo.",
     "CG_INVDATA": "Dados da Fatura",
     "CG_INVNOTE": "Notas da Fatura",
     "CG_LANG": "Idioma Padrão",
@@ -790,8 +792,8 @@
     "CG_SMTP_USER": "Usuário do SMTP",
     "CG_TIMEFORMAT": "Formato de Hora",
     "CG_TWID": "ID do Twitter",
-    "CG_UPDATE": "Atualizar Configuração",
-    "CG_UPDATED": "Configuração do Sistema atualizada com sucesso!",
+    "CG_UPDATE": "Actualizar Configuração",
+    "CG_UPDATED": "Configuração do Sistema actualizada com sucesso!",
     "CG_WEBEMAIL": "Email do Site",
     "CG_WEBEMAIL1": "Email de Confirmação de Pagamento",
     "CG_WEEKSTART": "Semana Começa Em"

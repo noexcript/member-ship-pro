@@ -74,6 +74,10 @@ switch ($pAction):
         App::Front()->updateProfile($data);
         break;
 
+    case 'member':
+        App::Front()->createMember($data);
+        break;
+
         //Select Membership
     case 'buy':
         if (!App::Auth()->is_User()) {
